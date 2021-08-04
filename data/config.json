@@ -102,7 +102,7 @@
     },
     "google": {
         "Analytics": "",
-        "AppScript": "https://script.google.com/macros/s/AKfycbyCq06UBWAId9MeUH6lZQRLs2kIRX5MMLCcYEn0EMk4zjrVC7u9qaaq1Ks1fBwzCvBKUA/exec",
+        "AppScript": "https://script.google.com/macros/s/AKfycbyitxbKbVC3AzRxxKCRX6L3jghv6Ng7_6RZoEgIL2vpYTdrOKosgVBfcwVXUwJhgx-f/exec",
         "targetName": "activity"
     },
     "splash": {
