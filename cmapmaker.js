@@ -143,16 +143,15 @@ class CMapMaker {
 			} else {
 				OvPassCnt.get(keys).then(ovanswer => {
 					winCont.spinner(false);
-					poiCont.all_clear();
+					// poiCont.all_clear();
 					poiCont.add_geojson(ovanswer);
 					console.log("cMapmaker: poi_get end(success).");
 					resolve({ "update": true });
-				}) /* .catch((jqXHR, statusText, errorThrown) => {
+				})  .catch((jqXHR, statusText, errorThrown) => {
 					winCont.spinner(false);
 					console.log("cMapmaker: poi_get end(overror). " + statusText);
-					// cMapmaker.update();
 					reject();
-				}); */
+				});
 			};
 		});
 	}
@@ -261,6 +260,9 @@ class cMapEvents {
 			cMapmaker.poi_get().then((status) => {
 				cMapmaker.poi_view();
 				if (status.update) listTable.datalist_make(Object.values(Conf.targets));	// view all list
+				this.busy = 0;
+			}).catch(()=>{
+				cMapmaker.poi_view();
 				this.busy = 0;
 			});
 		}, 1000);

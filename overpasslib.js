@@ -21,13 +21,7 @@ class OverPassControl {
 				let tileSE = GeoCont.ll2tile(LL.SE, OvPassCnt.CacheZoom);
 				let NW = GeoCont.tile2ll(tileNW, OvPassCnt.CacheZoom, "NW");
 				let SE = GeoCont.tile2ll(tileSE, OvPassCnt.CacheZoom, "SE");
-				GeoCont.box_write(NW, SE);
 				let maparea = SE.lat + ',' + NW.lng + ',' + NW.lat + ',' + SE.lng;
-				for (let y = tileNW.tileY; y < tileSE.tileY; y++) {
-					for (let x = tileNW.tileX; x < tileSE.tileX; x++) {
-						OvPassCnt.LLc[x + "." + y] = true;
-					};
-				};
 				let query = "";
 				targets.forEach(key => {
 					if (Conf.osm[key] !== undefined) Conf.osm[key].overpass.forEach(val => query += val + ";");
@@ -45,6 +39,12 @@ class OverPassControl {
 					}
 				}).done(function (data) {
 					console.log("OvPassCnt.get: done.");
+					GeoCont.box_write(NW, SE);
+					for (let y = tileNW.tileY; y < tileSE.tileY; y++) {
+						for (let x = tileNW.tileX; x < tileSE.tileX; x++) {
+							OvPassCnt.LLc[x + "." + y] = true;
+						};
+					};
 					if (data.elements.length == 0) { resolve(); return };
 					let osmxml = data;
 					let geojson = osmtogeojson(osmxml, { flatProperties: true });

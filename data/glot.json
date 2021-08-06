@@ -228,8 +228,8 @@
 		"en": "Failed to retrieve data."
 	},
 	"sverror_message": {
-		"ja": "サーバーからのデータ取得に失敗しました。やり直してください。",
-		"en": "Failed to retrieve data from the server. Please start over."
+		"ja": "データ取得に失敗。30秒後やり直して下さい。",
+		"en": "Data acquisition failed. Please try again after 30 seconds."
 	},
 	"nodata_title": {
 		"ja": "データが見つかりません",
