@@ -13,6 +13,9 @@
         "historic",
         "activity"
     ],
+    "list_targets":[
+        "activity"
+    ],
     "default": {
         "keep_default_view": false,
         "default_view": [

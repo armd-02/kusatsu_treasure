@@ -192,15 +192,17 @@ var Marker = (function () {				// Marker closure
 					map.flyTo(osmid.latlng, zoomlv, { animate: true, easeLinearity: 0.1, duration: 0.5 });
 					cMapmaker.detail_view(poi.osmid, poiid);
 				} else {						// Not Found Poi
+					winCont.spinner(true);
 					OvPassCnt.get_osmid(poi.osmid).then((geojson) => {
 						poiCont.add_geojson(geojson);
 						osmid = poiCont.get_osmid(poi.osmid);
 						map.flyTo(osmid.latlng, zoomlv, { animate: true, easeLinearity: 0.1, duration: 0.5 });
 						cMapmaker.detail_view(poi.osmid, poiid);
-					}).catch((e)=>{
-						console("center: error");
+						winCont.spinner(false);
+					}).catch((e) => {
 						console.error(e);
 						alert(glot.get("sverror_message"));
+						winCont.spinner(false);
 					});
 				};
 			}

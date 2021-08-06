@@ -68,7 +68,7 @@ class CMapMaker {
 			cMapmaker.poi_view();
 			winCont.window_resize();
 			listTable.init();
-			listTable.datalist_make(Object.values(Conf.targets));						// view all list
+			listTable.datalist_make(Object.values(Conf.list_targets));						// view all list
 			cMapmaker.mode_change("map");												// initialize last_modetime
 			winCont.menu_make(Conf.menu, "main_menu");
 			glot.render();
@@ -259,7 +259,7 @@ class cMapEvents {
 			this.busy = 2;
 			cMapmaker.poi_get().then((status) => {
 				cMapmaker.poi_view();
-				if (status.update) listTable.datalist_make(Object.values(Conf.targets));	// view all list
+				if (status.update) listTable.datalist_make(Object.values(Conf.list_targets));	// view all list
 				this.busy = 0;
 			}).catch(()=>{
 				cMapmaker.poi_view();
