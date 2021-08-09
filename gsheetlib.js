@@ -38,10 +38,9 @@ class GoogleSpreadSheet {
 	set(GET_Url, json, mode, userid, passwd) {	// サーバーにデータを投稿する(1件)
 		return new Promise(function (resolve, reject) {
 			let jsonp = JSON.stringify([json]);
+			jsonp = jsonp.replace(/\&/g, '%26');
 			let ggeturl = GET_Url + '?json=' + jsonp + '&mode=' + mode + '&userid=' + userid + '&passwd=' + passwd;
 			console.log("GoogleSpreadSheet: GET: " + ggeturl);
-			jsonp = jsonp.replace(/\?/g, '？');
-			jsonp = jsonp.replace(/\&/g, '＆');
 			$.ajax({ "type": "get", "url": ggeturl, dataType: "jsonp", cache: false, jsonpCallback: 'GDocReturn' }).then(json => {
 				resolve(json);
 			}, json => {
