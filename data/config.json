@@ -1,5 +1,20 @@
 {
     "targets": [
+        "restaurant",
+        "shop",
+        "disaster",
+        "government",
+        "library",
+        "museum",
+        "gallery",
+        "theatre",
+        "centre",
+        "park",
+        "historic",
+        "worship",
+        "amusement_arcade",
+        "station",
+        "post_box",
         "wikipedia"
     ],
     "list_targets": [
