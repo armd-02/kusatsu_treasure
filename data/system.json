@@ -6,7 +6,7 @@
     },
     "tile_select": {
         "Facebook_Builtin": "OSM_Standard",
-        "default": "Kusatsu_ort"
+        "default": "OSM_Standard"
     },
     "tile": {
         "Kusatsu_ort": {

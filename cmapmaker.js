@@ -114,9 +114,6 @@ class CMapMaker {
 			console.log('mode_change: ' + mode + ' : ' + this.last_modetime + " : " + Date.now());
 			list_collapse_icon.className = 'fas fa-chevron-' + params[mode][0];
 			list_collapse.classList[params[mode][1]]('show');
-			//			if (mode == "list") {
-			//				listTable.datalist_make(Object.values(Conf.targets))
-			//			};
 			this.last_modetime = Date.now();
 			this.status = "normal";
 		};

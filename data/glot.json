@@ -44,24 +44,28 @@
 		"en": "Category"
 	},
 	"act_name": {
-		"ja": "名前",
+		"ja": "ニックネーム",
 		"en": "Name"
 	},
-	"act_rubi": {
-		"ja": "名前（よみ）",
-		"en": "Name(easy)"
+	"act_grade": {
+		"ja": "学年",
+		"en": "Grade"
+	},
+	"act_title": {
+		"ja": "題名",
+		"en": "Subject"
 	},
 	"act_memo": {
 		"ja": "説明",
 		"en": "Detail"
 	},
-	"act_detail_url": {
-		"ja": "詳細URL",
-		"en": "Detail URL"
-	},
 	"act_official_url": {
-		"ja": "公式URL",
-		"en": "Official URL"
+		"ja": "草津おみやげラボURL",
+		"en": "Kusatsu Omiyage Labo URL"
+	},
+	"act_recommend_url": {
+		"ja": "オススメURL",
+		"en": "Recommend URL"
 	},
 	"act_picture_url1": {
 		"ja": "写真URL1",
@@ -74,6 +78,26 @@
 	"act_picture_url3": {
 		"ja": "写真URL3",
 		"en": "Picture URL3"
+	},
+	"act_quiz_comment": {
+		"ja":"クイズを出したい人は、下に書いてね",
+		"en":"If you want to give a quiz, please write below"
+	},
+	"act_quiz": {
+		"ja": "クイズの問題",
+		"en": "Quiz questions"
+	},
+	"act_quiz_choice": {
+		"ja": "選択肢",
+		"en": "Choice"
+	},
+	"act_quiz_answer": {
+		"ja": "答え",
+		"en": "Answer"
+	},
+	"act_quiz_hint_url": {
+		"ja": "ヒントURL",
+		"en": "Hint URL"
 	},
 	"act_userid": {
 		"ja": "ユーザー名",

@@ -181,31 +181,35 @@ var Marker = (function () {				// Marker closure
 		},
 
 		center: (poiid) => {								// Map move to PoiId & Zoom(config)
-			let poi = poiCont.get_osmid(poiid);
-			let zoomlv = Conf.default.iconViewZoom >= map.getZoom() ? Conf.default.iconViewZoom : map.getZoom();
-			if (poi !== undefined) {	// poi = osmid
-				map.flyTo(poi.latlng, zoomlv, { animate: true, easeLinearity: 0.1, duration: 0.5 });
-			} else {					// poi = actid
-				poi = poiCont.get_actid(poiid);
-				let osmid = poiCont.get_osmid(poi.osmid);
-				if (osmid !== undefined) {	// Found Poi
-					map.flyTo(osmid.latlng, zoomlv, { animate: true, easeLinearity: 0.1, duration: 0.5 });
-					cMapmaker.detail_view(poi.osmid, poiid);
-				} else {						// Not Found Poi
-					winCont.spinner(true);
-					OvPassCnt.get_osmid(poi.osmid).then((geojson) => {
-						poiCont.add_geojson(geojson);
-						osmid = poiCont.get_osmid(poi.osmid);
+			return new Promise((resolve, reject) => {
+				let poi = poiCont.get_osmid(poiid);
+				let zoomlv = Conf.default.iconViewZoom >= map.getZoom() ? Conf.default.iconViewZoom : map.getZoom();
+				if (poi !== undefined) {	// poi = osmid
+					map.flyTo(poi.latlng, zoomlv, { animate: true, easeLinearity: 0.1, duration: 0.5 });
+				} else {					// poi = actid
+					poi = poiCont.get_actid(poiid);
+					let osmid = poiCont.get_osmid(poi.osmid);
+					if (osmid !== undefined) {	// Found Poi
 						map.flyTo(osmid.latlng, zoomlv, { animate: true, easeLinearity: 0.1, duration: 0.5 });
 						cMapmaker.detail_view(poi.osmid, poiid);
-						winCont.spinner(false);
-					}).catch((e) => {
-						console.error(e);
-						alert(glot.get("sverror_message"));
-						winCont.spinner(false);
-					});
-				};
-			}
+					} else {						// Not Found Poi
+						winCont.spinner(true);
+						OvPassCnt.get_osmid(poi.osmid).then((geojson) => {
+							poiCont.add_geojson(geojson);
+							osmid = poiCont.get_osmid(poi.osmid);
+							map.flyTo(osmid.latlng, zoomlv, { animate: true, easeLinearity: 0.1, duration: 0.5 });
+							cMapmaker.detail_view(poi.osmid, poiid);
+							winCont.spinner(false);
+							resolve();
+						}).catch((e) => {
+							console.error(e);
+							alert(glot.get("sverror_message"));
+							winCont.spinner(false);
+							reject();
+						});
+					};
+				}
+			});
 		},
 
 		all_clear: () => Object.keys(markers).forEach((target) => Marker.delete(target)),	// all delete
@@ -285,7 +289,10 @@ class ListTable {
 				window.clearTimeout(this.timeout);
 				this.timeout = 0;
 			};
-			this.timeout = window.setTimeout(() => listTable.filter(keyword.value, 500));
+			this.timeout = window.setTimeout(() => {
+				listTable.filter(keyword.value, 500);
+				cMapmaker.mode_change('list');
+			});
 		};
 		keyword.removeEventListener('change', keyword_change);
 		keyword.addEventListener('change', keyword_change);
@@ -336,11 +343,20 @@ class ListTable {
 		this.table.draw();
 		this.table.off('select');
 		this.table.on('select', (e, dt, type, indexes) => {
-			e.stopPropagation();
-			if (type === 'row') {
-				var data = this.table.rows(indexes).data()[0][0];	// first line and first column
-				Marker.center(data);
-			}
+			if (!this.lock) {
+				e.stopPropagation();
+				if (type === 'row') {
+					var data = this.table.rows(indexes).data()[0][0];	// first line and first column
+					this.lock = true;
+					Marker.center(data).then(() => {
+						console.log("OK");
+						this.lock = false;
+					}).catch(() => {
+						console.log("NG");
+						this.lock = false;
+					});
+				}
+			};
 		});
 		this.lock = false;
 	};

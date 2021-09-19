@@ -62,21 +62,28 @@ class modal_Activities {
                     break;
                 case "child":
                     glot_key = "children";
-                    clone.querySelector("span").innerHTML = act.title + (act.rubi !== "" ? "(" + act.rubi + ")" : "");
-                    chtml += "<strong>" + glot.get("act_category") + "</strong><br>" + act.category + "<br><br>";
-                    chtml += "<strong>" + act.title + (act.rubi !== "" ? "(" + act.rubi + ")" : "") + "</strong><br>";
-                    chtml += act.body.replace(/\r?\n/g, '<br>');
-                    ["detail_url", "official_url"].forEach((val => {
-                        if (act[val] !== "http://" && act[val] == "https://" && act[val] == "") {
-                            chtml += "<string>" + glot.get(`act${act[val]}`) + "</strong> " + `<a href="${act[val]}">${act[val]}</a>` + "<br><br>";
-                        }
-                    }));
-                    for (let i = 1; i <= 3; i++) {
-                        let url = act[`picture_url${i}`];
-                        if (url !== "http://" && url !== "https://" && url !== "") {
-                            chtml += (url !== "" ? `<img class="w100 m-1" src="${url}"><br>` : "<br>");
-                        }
-                    };
+                    let form = Conf.activities.form;
+                    clone.querySelector("span").innerHTML = act.title;
+                    Object.keys(form).forEach((key) => {
+                        let gdata = act[form[key].gsheet];
+                        switch (form[key].type) {
+                            case "select":
+                            case "text":
+                            case "textarea":
+                                chtml += `<strong>${glot.get(form[key].glot)}</strong><br>${gdata.replace(/\r?\n/g, '<br>')}<br><br>`;
+                                break;
+                            case "url":
+                                if (gdata !== "http://" && gdata !== "https://" && gdata !== "") {
+                                    chtml += `<string>${glot.get(form[key].glot)}</strong> <a href="${gdata}">${gdata}</a><br><br>`;
+                                };
+                                break;
+                            case "image_url":
+                                if (gdata !== "http://" && gdata !== "https://" && gdata !== "") {
+                                    chtml += `<img class="w100 m-1" src="${gdata}"><br>`;
+                                };
+                                break;
+                        };
+                    });
                     break;
                 default:    // event
                     glot_key = "activities";
@@ -106,8 +113,8 @@ class modal_Activities {
 
         html = "<div class='container'>";
         Object.keys(act.form).forEach(key => {
+            let akey = "act_" + key;
             html += "<div class='row mb-1 align-items-center'>";
-            html += `<div class='col-2 p-1'>${glot.get(`act_${act.form[key].glot}`)}</div>`;
             let defvalue = data[act.form[key].gsheet] || "";
             switch (act.form[key].type) {
                 case "select":
@@ -116,16 +123,27 @@ class modal_Activities {
                         let selected = category[idx] !== data.category ? "" : "selected";
                         selects += `<option value="${category[idx]}" ${selected}>${category[idx]}</option>`;
                     };
-                    html += `<div class="col-10 p-1"><select id="${key}" class="form-control form-control-sm">${selects}</select></div>`;
+                    html += `<div class='col-2 p-1'>${glot.get(`${act.form[key].glot}`)}</div>`;
+                    html += `<div class="col-10 p-1"><select id="${akey}" class="form-control form-control-sm">${selects}</select></div>`;
                     break;
                 case "textarea":
-                    html += `<div class="col-10 p-1"><textarea id="${key}" rows="8" class="form-control form-control-sm">${defvalue}</textarea></div>`;
+                case "quiz_textarea":
+                    html += `<div class='col-2 p-1'>${glot.get(`${act.form[key].glot}`)}</div>`;
+                    html += `<div class="col-10 p-1"><textarea id="${akey}" rows="8" class="form-control form-control-sm">${defvalue}</textarea></div>`;
                     break;
+                case "quiz_choice":
                 case "text":
-                    html += `<div class="col-10 p-1"><input type="text" id="${key}" maxlength="80" class="form-control form-control-sm" value="${defvalue}"></div>`;
+                    html += `<div class='col-2 p-1'>${glot.get(`${act.form[key].glot}`)}</div>`;
+                    html += `<div class="col-10 p-1"><input type="text" id="${akey}" maxlength="80" class="form-control form-control-sm" value="${defvalue}"></div>`;
                     break;
+                case "quiz_hint_url":
+                case "image_url":
                 case "url":
-                    html += `<div class="col-10 p-1"><input type="text" id="${key}" class="form-control form-control-sm" value="${defvalue}"></div>`;
+                    html += `<div class='col-2 p-1'>${glot.get(`${act.form[key].glot}`)}</div>`;
+                    html += `<div class="col-10 p-1"><input type="text" id="${akey}" class="form-control form-control-sm" value="${defvalue}"></div>`;
+                    break;
+                case "comment":
+                    html += `<div class='col-12 p-1'><h5>${glot.get(`${act.form[key].glot}`)}</h5></div>`;
                     break;
             };
             html += "</div>";
@@ -153,7 +171,7 @@ class modal_Activities {
                     modal_activities.busy = true;
                     let senddata = { "id": act_id.value, "osmid": act_osmid.value };
                     Object.keys(act.form).forEach(key => {
-                        senddata[act.form[key].gsheet] = document.getElementById(key).value
+                        if (act.form[key].gsheet !== "") senddata[act.form[key].gsheet] = document.getElementById("act_" + key).value
                     });
 
                     gSpreadSheet.get_salt(Conf.google.AppScript, userid).then((e) => {
