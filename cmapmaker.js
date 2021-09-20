@@ -129,7 +129,7 @@ class CMapMaker {
 	}
 
 	poi_get(targets) {		// OSMとGoogle SpreadSheetからPoiを取得してリスト化
-		return new Promise((resolve, reject) => {
+		return new Promise((resolve) => {
 			console.log("cMapmaker: PoiGet start");
 			winCont.spinner(true);
 			var keys = (targets !== undefined && targets !== "") ? targets : Object.values(Conf.targets);
@@ -144,10 +144,10 @@ class CMapMaker {
 					poiCont.add_geojson(ovanswer);
 					console.log("cMapmaker: poi_get end(success).");
 					resolve({ "update": true });
-				})  .catch((jqXHR, statusText, errorThrown) => {
+				}).catch((jqXHR) => {
 					winCont.spinner(false);
-					console.log("cMapmaker: poi_get end(overror). " + statusText);
-					reject();
+					console.log("cMapmaker: poi_get end(overror). " + jqXHR.stack);
+					resolve({ "update": false });
 				});
 			};
 		});
@@ -258,7 +258,7 @@ class cMapEvents {
 				cMapmaker.poi_view();
 				if (status.update) listTable.datalist_make(Object.values(Conf.list_targets));	// view all list
 				this.busy = 0;
-			}).catch(()=>{
+			}).catch(() => {
 				cMapmaker.poi_view();
 				this.busy = 0;
 			});
