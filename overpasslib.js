@@ -39,7 +39,7 @@ class OverPassControl {
 					}
 				}).done(function (data) {
 					console.log("OvPassCnt.get: done.");
-					GeoCont.box_write(NW, SE);
+					// GeoCont.box_write(NW, SE);		// Cache View
 					for (let y = tileNW.tileY; y < tileSE.tileY; y++) {
 						for (let x = tileNW.tileX; x < tileSE.tileX; x++) {
 							OvPassCnt.LLc[x + "." + y] = true;
