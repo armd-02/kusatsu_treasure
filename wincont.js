@@ -13,6 +13,7 @@ class WinCont {
         try {
             let display = view ? "remove" : "add";
             global_spinner.classList[display]('d-none');
+            list_spinner.classList[display]('d-none');
         } catch (error) {
             console.log("no spinner");
         }

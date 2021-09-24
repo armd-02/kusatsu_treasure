@@ -4,7 +4,7 @@
 // Global Variable
 var Conf = {};					// Config Praams
 const LANG = (window.navigator.userLanguage || window.navigator.language || window.navigator.browserLanguage).substr(0, 2) == "ja" ? "ja" : "en";
-const FILES = ["./baselist.html", "./data/config.json", './data/system.json', './data/overpass.json', `./data/category-${LANG}.json`, `data/datatables-${LANG}.json`, `./data/marker.json`];
+const FILES = ["./baselist.html", "./data/config.json", './data/system.json', './data/overpass.json', `./data/category-${LANG}.json`, `data/list-${LANG}.json`, `./data/marker.json`];
 const glot = new Glottologist();
 
 // initialize
@@ -47,7 +47,6 @@ class CMapMaker {
 	init(baselist) {	// Initialize
 		winCont.window_resize();			// Set Window Size(mapidのサイズ指定が目的)
 		winCont.splash(true);
-		Marker.init();						// Marker Initialize
 		leaflet.init();						// Leaflet Initialize
 
 		Promise.all([
@@ -68,8 +67,8 @@ class CMapMaker {
 			cMapmaker.poi_view();
 			winCont.window_resize();
 			listTable.init();
-			listTable.datalist_make(Object.values(Conf.list_targets));						// view all list
-			cMapmaker.mode_change("map");												// initialize last_modetime
+			listTable.make(Object.values(Conf.list_targets));					// view all list
+			cMapmaker.mode_change("map");										// initialize last_modetime
 			winCont.menu_make(Conf.menu, "main_menu");
 			glot.render();
 			if (location.search !== "") {    	// 引数がある場合

@@ -5,8 +5,8 @@
         "OverPassServer": "https://overpass-api.de/api/interpreter"
     },
     "tile_select": {
-        "Facebook_Builtin": "OSM_Standard",
-        "default": "OSM_Standard"
+        "Facebook_Builtin": "Kusatsu_ort",
+        "default": "Kusatsu_ort"
     },
     "tile": {
         "Kusatsu_ort": {

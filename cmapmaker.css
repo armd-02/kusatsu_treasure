@@ -148,8 +148,25 @@ input[type="search"] {
 	width: calc(180px - 4em);
 }
 
-table.dataTable tbody>tr.selected, table.dataTable tbody>tr>.selected {
-	background-color: #0274d880 !important;
+/* for Grid.js */
+
+th.gridjs-th {
+	padding: 2px 4px !important;
+	margin: 0px 8px !important;
+}
+
+td.gridjs-td {
+	padding: 2px 4px !important;
+	cursor: pointer !important;
+}
+
+tr:hover td {
+	background-color: #d9efff !important;
+}
+
+thead th {
+	position: sticky !important;
+	top: 0 !important;
 }
 
 .area_mask {
@@ -163,4 +180,15 @@ table.dataTable tbody>tr.selected, table.dataTable tbody>tr>.selected {
 .list {
 	max-width: 120px;
 	max-height: 120px;
+}
+
+/* spinner */
+#list_spinner {
+	position: absolute;
+	margin: auto;
+	left: 0px;
+	z-index: 9999;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
 }

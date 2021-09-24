@@ -24,12 +24,12 @@
 		"en": "Terms of Use"
 	},
 	"licence_message": {
-		"ja": "大阪市立図書館の「思い出のこし」のデータは <a href=\"https://creativecommons.org/licenses/by/4.0/deed.ja\" target='_blank'>CC BY 4.0</a> ライセンスで <a href=\"https://www.oml.city.osaka.lg.jp/?page_id=1301#_11176\"target='_blank'>公開</a> されています。<br>",
-		"en": "The \"Omoide nokoshi\" data of the Osaka Municipal Library is <a href=\"https://www.oml.city.osaka.lg.jp/?page_id=1301#_11176\"target='_blank'>released</a> under a <a href=\"https://creativecommons.org/licenses/by/4.0/deed.ja\" target='_blank'>CC BY 4.0</a> license."
+		"ja": "草津おみやげラボ「くさつお宝マップ」のデータは <a href=\"https://creativecommons.org/licenses/by/4.0/deed.ja\">CC BY 4.0</a> ライセンスで提供可能です。必要なご連絡ください。<br>",
+		"en": "The data of Kusatsu Souvenir Lab [Kusatsu Treasure Map] can be provided under  <a href=\"https://creativecommons.org/licenses/by/4.0/deed.ja\">CC BY 4.0</a> license. Please contact us if necessary."
 	},
 	"more_message": {
-		"ja": "スプラッシュ画像: <a href=\"http://image.oml.city.osaka.lg.jp/archive/detail?cls=ancient&pkey=n0067001\">大阪市立図書館デジタルアーカイブ 大阪市大観</a>",
-		"en": "Splash Image: <a href=\"http://image.oml.city.osaka.lg.jp/archive/detail?cls=ancient&pkey=n0067001\">Osaka Municipal Library Digital Archive Osakashi daikan</a>"
+		"ja": "",
+		"en": ""
 	},
 	"act_add": {
 		"ja": "追加",

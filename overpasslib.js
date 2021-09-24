@@ -8,7 +8,7 @@ class OverPassControl {
 		this.CacheZoom = 14;
 	}
 
-	get(targets, poi, progress) {
+	get(targets) {
 		return new Promise((resolve, reject) => {
 			var LL = GeoCont.get_LL();
 			let CT = GeoCont.ll2tile(map.getBounds().getCenter(), OvPassCnt.CacheZoom);
@@ -31,14 +31,11 @@ class OverPassControl {
 				$.ajax({
 					"type": 'GET', "dataType": 'json', "url": url, "cache": false, "xhr": () => {
 						var xhr = new window.XMLHttpRequest();
-						xhr.addEventListener("progress", function (evt) {
-							console.log("OvPassCnt.get: Progress: " + evt.loaded);
-							if (progress !== undefined) progress(evt.loaded);
-						}, false);
+						xhr.addEventListener("progress", (evt) => { console.log("OvPassCnt: Progress: " + evt.loaded) }, false);
 						return xhr;
 					}
 				}).done(function (data) {
-					console.log("OvPassCnt.get: done.");
+					console.log("OvPassCnt: done.");
 					// GeoCont.box_write(NW, SE);		// Cache View
 					for (let y = tileNW.tileY; y < tileSE.tileY; y++) {
 						for (let x = tileNW.tileX; x < tileSE.tileX; x++) {
@@ -49,6 +46,9 @@ class OverPassControl {
 					let osmxml = data;
 					let geojson = osmtogeojson(osmxml, { flatProperties: true });
 					OvPassCnt.set_targets(geojson.features);
+					OvPassCnt.Cache.geojson.forEach((key, idx) => {	// no target no geojson
+						if (OvPassCnt.Cache.targets[idx] == undefined) delete OvPassCnt.Cache.geojson[idx];
+					});
 					console.log("OvPassCnt: Cache Update");
 					resolve(OvPassCnt.Cache);
 				}).fail(function (jqXHR, statusText, errorThrown) {
@@ -78,12 +78,12 @@ class OverPassControl {
 		})
 	}
 
+	// tagを元にtargetを設定
 	set_targets(geojson) {
 		console.log("set_targets: " + geojson.length);
 		geojson.forEach((val1) => {
 			let cidx = OvPassCnt.Cache.geojson.findIndex(function (val2) {
-				if (val2.properties.id == val1.properties.id)
-					return true;
+				if (val2 !== undefined) if (val2.properties.id == val1.properties.id) return true;
 			});
 			if (cidx === -1) { // キャッシュが無い時は更新
 				OvPassCnt.Cache.geojson.push(val1);
@@ -91,8 +91,7 @@ class OverPassControl {
 			};
 
 			let keys = Object.keys(Conf.osm).filter(key => Conf.osm[key].file == undefined);
-			keys.forEach(val2 => {
-				var target = val2;
+			keys.forEach(target => {
 				Conf.osm[target].tags.forEach(function (tag) {
 					let tag_kv = tag.split("=").concat([""]);
 					let tag_not = tag_kv[0].slice(-1) == "!" ? true : false;

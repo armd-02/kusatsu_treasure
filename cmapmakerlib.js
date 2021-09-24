@@ -6,8 +6,8 @@ var poiCont = (function () {
 	var adata = [], latlngs = {}, geoidx = {};								//act data variable /  poi's latlng & geoidx
 
 	return {
-		pois: () => { return { pois: pdata, acts: adata } },
-		targets: () => {									// return all targets
+		pois: () => { return { pois: pdata, acts: adata, latlngs: latlngs } },
+		targets: () => {													// return all targets
 			let target = [];
 			pdata.targets.forEach(names => target = target.concat(names));	// poisのtarget集計
 			if (adata.length > 0) target.concat(Conf.google.targetName);
@@ -23,10 +23,12 @@ var poiCont = (function () {
 				poiCont.set_geojson(poi);
 			});
 			pdata.geojson.forEach((node, node_idx) => {
-				let ll, lat = 0, lng = 0, counts = node.geometry.coordinates[0].length;;
-				ll = GeoCont.flat2single(node.geometry.coordinates, node.geometry.type);
-				latlngs[node.id] = { "lat": ll[1], "lng": ll[0] };
-				geoidx[node.id] = node_idx;
+				if (latlngs[node.id] == undefined) {
+					let ll = GeoCont.flat2single(node.geometry.coordinates, node.geometry.type);
+					delete node.geometry.coordinates;			// メモリ削減のため座標情報を削除
+					latlngs[node.id] = [ll[1], ll[0]];
+					geoidx[node.id] = node_idx;
+				}
 			});
 		},
 		set_geojson: (poi) => {								// add_geojsonのサブ機能
@@ -69,7 +71,7 @@ var poiCont = (function () {
 			let pois = filter_geojson(targets);
 			return { "pois": pois, "acts": targets.indexOf(Conf.google.targetName) > -1 ? adata : [] };
 		},
-		list: function (targets) {              						// DataTables向きのJsonデータリストを出力
+		list: function (targets) {              						// Grid.js向きの配列を出力
 			let pois = filter_geojson(targets), datas = []; 			// targetsに指定されたpoiのみフィルター
 			pois.geojson.forEach((node) => {
 				let tags = node.properties;
@@ -107,35 +109,12 @@ var poiCont = (function () {
 	};
 })();
 
-var Marker = (function () {				// Marker closure
-	var markers = {} //, SvgIcon = {};		// SVGアイコン連想配列(filename,svg text)
+var Marker = (function () {								// Marker closure
+	var markers = {};
 
 	return {
-		init: () => {
-			/*
-			let jqXHRs = [], keys = [];			// SVGファイルをSvgIconへ読み込む
-			Object.keys(Conf.marker_tag).forEach(key1 => {
-				Object.keys(Conf.marker_tag[key1]).forEach((key2) => {
-					let filename = Conf.marker_tag[key1][key2];
-					if (keys.indexOf(filename) == -1) {
-						keys.push(filename);
-						jqXHRs.push($.get(`./image/${filename}`));
-					};
-				});
-			});
-			$.when.apply($, jqXHRs).always(function () {
-				let xs = new XMLSerializer();
-				for (let key in keys) SvgIcon[keys[key]] = xs.serializeToString(arguments[key][0]);
-			});
-			*/
-		},
-		markers: () => {
-			return markers;
-		},
-		//images: () => {							// SvgIcon(svgを返す)
-		//	return SvgIcon;
-		//},
-		set: (target) => {						// Poi表示
+		markers: () => { return markers },
+		set: (target) => {								// Poi表示
 			console.log("Marker.set: " + target);
 			Marker.delete(target);
 			markers[target] = [];
@@ -150,17 +129,8 @@ var Marker = (function () {				// Marker closure
 					};
 				});
 			};
-			/* acts表示は行わない（マーカーとしては）
-			if (all.acts.length > 0) {					// acts表示
-				for (let idx in all.acts) {
-					make_marker({ target: target, act: all.acts[idx], filename: 'sakura.svg', langname: all.acts[idx].title }).then(marker => {
-						if (marker !== undefined) marker.forEach(val => markers[target].push(val));
-					});
-				};
-			};
-			*/
-
 		},
+
 		get: (target, osmid) => {				// Poi取得
 			let idx = markers[target].findIndex(val => val.mapmaker_id == osmid);
 			let marker = markers[target][idx];
@@ -192,6 +162,7 @@ var Marker = (function () {				// Marker closure
 					if (osmid !== undefined) {	// Found Poi
 						map.flyTo(osmid.latlng, zoomlv, { animate: true, easeLinearity: 0.1, duration: 0.5 });
 						cMapmaker.detail_view(poi.osmid, poiid);
+						resolve();
 					} else {						// Not Found Poi
 						winCont.spinner(true);
 						OvPassCnt.get_osmid(poi.osmid).then((geojson) => {
@@ -202,7 +173,7 @@ var Marker = (function () {				// Marker closure
 							winCont.spinner(false);
 							resolve();
 						}).catch((e) => {
-							console.error(e);
+							console.log(e);
 							alert(glot.get("sverror_message"));
 							winCont.spinner(false);
 							reject();
@@ -261,7 +232,7 @@ var Marker = (function () {				// Marker closure
 				if (name !== "" && Conf.effect.text.view) html += span;
 				let span_width = name !== "" ? name.length * Conf.effect.text.size : 0;
 				let icon = L.divIcon({ "className": "", "iconSize": [iconsize[0] + span_width, iconsize[1]], "iconAnchor": [iconsize[0] / 2, iconsize[1] / 2], "html": html + "</div>" });
-				let marker = L.marker(new L.LatLng(params.poi.latlng.lat, params.poi.latlng.lng), { icon: icon, draggable: false });
+				let marker = L.marker(new L.LatLng(params.poi.latlng[0], params.poi.latlng[1]), { icon: icon, draggable: false });
 				marker.addTo(map).on('click', e => { cMapmaker.detail_view(e.target.mapmaker_id) });
 				marker.mapmaker_id = params.poi.geojson.id;
 				marker.mapmaker_key = params.target;
@@ -278,107 +249,81 @@ var Marker = (function () {				// Marker closure
 class ListTable {
 
 	constructor() {
-		this.table;
-		this.lock = false;
-		this.timeout = 0;
+		this.grid;
+		this.columns = [];
+		this.lock_mode = false;
+		this.list = [];
+		this.timeout;
+		this.height;
 	};
 
 	init() { // dataListに必要な初期化
+		listTable.columns = Conf.list.columns.common;
+		listTable.height = window.innerHeight * 0.4;
+
 		function keyword_change() {        				// キーワード検索
-			if (this.timeout > 0) {
-				window.clearTimeout(this.timeout);
-				this.timeout = 0;
+			if (listTable.timeout > 0) {
+				window.clearTimeout(listTable.timeout);
+				listTable.timeout = 0;
 			};
-			this.timeout = window.setTimeout(() => {
-				listTable.filter(keyword.value, 500);
+			listTable.timeout = window.setTimeout(() => {
+				let flist = listTable._filter(listTable.list, keyword.value);
+				listTable.grid.updateConfig({ "data": flist }).forceRender(document.getElementById("tableid"));
 				cMapmaker.mode_change('list');
-			});
+			}, 500);
 		};
 		keyword.removeEventListener('change', keyword_change);
 		keyword.addEventListener('change', keyword_change);
 
 		function category_change() {        			// カテゴリ名でキーワード検索
-			let category = category_list.value;
-			listTable.filter(category == "-" ? "" : category);
+			let flist = category_list.value !== "-" ? listTable._filter(listTable.list, category_list.value) : listTable.list;
+			listTable.grid.updateConfig({ "data": flist }).forceRender(document.getElementById("tableid"));
+			cMapmaker.mode_change('list');
 		};
 		category_list.removeEventListener('change', category_change);
 		category_list.addEventListener('change', category_change);
 	};
 
-	category_make(result) {    							// Poi種別リストを作成
+	make(targets) {  							// リスト表示
+		if (listTable.grid !== undefined) listTable.grid.destroy();
+		listTable.list = poiCont.list(targets);
+		listTable.grid = new gridjs.Grid({
+			"columns": listTable.columns, "data": listTable.list, "resizable": true, "height": listTable.height,
+			sort: true, fixedHeader: true
+		});
+		listTable.grid.render(document.getElementById("tableid"));
+		listTable._categorys(listTable.list);
+		listTable.grid.on('rowClick', (...args) => {
+			if (!listTable.lock_mode) {
+				listTable.lock_mode = true;
+				winCont.spinner(true);
+				try {
+					var data = args[1].cell(0).data;
+					Marker.center(data).then(() => {
+						console.log("OK");
+					}).catch(() => {
+						console.log("NG");
+					}).then(() => { listTable.lock_mode = false });
+				} catch (error) {
+					winCont.spinner(false);
+					listTable.lock_mode = false;
+				}
+			};
+		});
+	};
+
+	_filter(result, keyword) {						// 指定したキーワードで絞り込み
+		return result.filter((row) => {
+			return row.join(',').indexOf(keyword) > -1;
+		});
+	};
+
+	_categorys(result) {    						// resultを元に種別リストを作成
 		winCont.select_clear(`category_list`);
 		let pois = result.map(data => { return data[2] });
 		pois = pois.filter((x, i, self) => { return self.indexOf(x) === i });
 		pois.map(poi => winCont.select_add(`category_list`, poi, poi));
 	};
 
-	datalist_make(targets) {  							// リスト表示
-		this.lock = true;
-		if (this.table !== undefined) this.table.destroy();
-		let result = poiCont.list(targets);
-		let columns = JSON.parse(JSON.stringify(Conf.datatables.columns.common));
-		this.table = $('#tableid').DataTable({
-			"columns": Object.keys(columns).map(function (key) { return columns[key] }),
-			"data": result,
-			"processing": true,
-			"filter": true,
-			"destroy": true,
-			"deferRender": true,
-			"dom": 't',
-			"language": Conf.datatables.lang,
-			"order": [],    // ソート禁止(行選択時にズレが生じる)
-			"ordering": true,
-			"orderClasses": false,
-			"paging": true,
-			"processing": false,
-			"pageLength": 100000,
-			"select": 'single',
-			"scrollY": window.innerHeight * 0.4,
-			"scrollCollapse": true
-		});
-		$('#modal_select_table').css("width", "");
-		listTable.category_make(result);
-		// let osmids = result.filter(val => val.enable).map(val => val.osmid);
-		this.one_select([]);
-		this.table.draw();
-		this.table.off('select');
-		this.table.on('select', (e, dt, type, indexes) => {
-			if (!this.lock) {
-				e.stopPropagation();
-				if (type === 'row') {
-					var data = this.table.rows(indexes).data()[0][0];	// first line and first column
-					this.lock = true;
-					Marker.center(data).then(() => {
-						console.log("OK");
-						this.lock = false;
-					}).catch(() => {
-						console.log("NG");
-						this.lock = false;
-					});
-				}
-			};
-		});
-		this.lock = false;
-	};
-
-	one_select(osmids) {
-		let alldata = this.table.rows().data().toArray();
-		let join_ids = osmids.join('|');
-		alldata.forEach((val, idx) => { if (join_ids.indexOf(val.osmid) > -1) this.table.row(idx).select() });
-	};
-
-	indexes() { // アイコンをクリックした時にデータを選択
-		let selects = this.table.rows('.selected').indexes();
-		selects = table.rows(selects).data();
-		return selects.toArray();
-	};
-
-	filter(keyword) {
-		console.log("ListTable: filter keyword: " + keyword);
-		this.table.search(keyword).draw();
-	};                		// キーワード検索
-	filtered() { this.table.rows({ filter: 'applied' }).data().toArray() }; 		// 現在の検索結果リスト
-	filtered_select() { this.table.rows({ filter: 'applied' }).select() };
-	filtered_deselect() { this.table.rows({ filter: 'applied' }).deselect() };
 };
 var listTable = new ListTable();
