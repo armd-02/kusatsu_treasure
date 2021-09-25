@@ -222,18 +222,17 @@ var Marker = (function () {								// Marker closure
 				console.log("name" + ": " + keyn + "=" + tags[keyn]);
 			};
 			let actlists = poiCont.get_actlist(params.poi.geojson.id);
-			//let iconsize = actlists.length > 0 ? [Conf.style.icon.x * Conf.style.icon.scale, Conf.style.icon.y * Conf.style.icon.scale] : [Conf.style.icon.x, Conf.style.icon.y];
 			if (keyn !== undefined && keyv !== undefined) {	// in category
 				icon_name = params.filename == undefined ? Conf.marker_tag[keyn][tags[keyn]] : params.filename;
-				let size, icon, html = `<div class="d-flex align-items-center">`;
+				let size, html = `<div class="d-flex align-items-center">`;
 				let span_width = name !== "" ? name.length * Conf.effect.text.size : 0;
 				let css_name = actlists.length > 0 ? "icon_attention" : "icon_normal";
 				size = parseInt(basic.getStyleSheetValue(css_name, "height"));
 				if (actlists.length > 0) html += `<img class="attention" src="./image/attention_noframe.svg">`;
 				html += `<img class="${css_name}" src="./${Conf.icon.path}/${icon_name}" icon-name="${name}">`;
-				icon = L.divIcon({ "className": "", "iconSize": [size + span_width, size], "iconAnchor": [size / 2, size / 2], "html": html + "</div>" });
 				let span = `<span class="icon" style="font-size: ${Conf.effect.text.size}px">${name}</span>`;
 				if (name !== "" && Conf.effect.text.view) html += span;
+				let icon = L.divIcon({ "className": "", "iconSize": [size + span_width, size], "iconAnchor": [size / 2, size / 2], "html": html + "</div>" });
 				let marker = L.marker(new L.LatLng(params.poi.latlng[0], params.poi.latlng[1]), { icon: icon, draggable: false });
 				marker.addTo(map).on('click', e => { cMapmaker.detail_view(e.target.mapmaker_id) });
 				marker.mapmaker_id = params.poi.geojson.id;
