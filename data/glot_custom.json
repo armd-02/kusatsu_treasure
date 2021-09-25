@@ -1,0 +1,86 @@
+{
+	"about": {
+		"ja": "くさつお宝マップついて",
+		"en": "about Kusatsu Treasure Map"
+	},
+	"owner": {
+		"ja": "開発サイト",
+		"en": "development site"
+	},
+	"openstreetmap": {
+		"ja": "OpenStreetMapについて",
+		"en": "about OpenStreetMap"
+	},
+	"title": {
+		"ja": "くさつお宝マップ",
+		"en": "Kusatsu Treasure Map"
+	},
+	"subtitle": {
+		"ja": "Community Map Maker",
+		"en": "Community Map Maker"
+	},
+	"licence_title": {
+		"ja": "利用規約",
+		"en": "Terms of Use"
+	},
+	"licence_message": {
+		"ja": "草津おみやげラボ「くさつお宝マップ」のデータは <a href=\"https://creativecommons.org/licenses/by/4.0/deed.ja\">CC BY 4.0</a> ライセンスで提供可能です。必要なご連絡ください。<br>",
+		"en": "The data of Kusatsu Souvenir Lab [Kusatsu Treasure Map] can be provided under  <a href=\"https://creativecommons.org/licenses/by/4.0/deed.ja\">CC BY 4.0</a> license. Please contact us if necessary."
+	},
+	"more_message": {
+		"ja": "",
+		"en": ""
+	},
+	"act_grade": {
+		"ja": "学年",
+		"en": "Grade"
+	},
+	"act_title": {
+		"ja": "題名",
+		"en": "Subject"
+	},
+	"act_memo": {
+		"ja": "説明",
+		"en": "Detail"
+	},
+	"act_official_url": {
+		"ja": "草津おみやげラボURL",
+		"en": "Kusatsu Omiyage Labo URL"
+	},
+	"act_recommend_url": {
+		"ja": "オススメURL",
+		"en": "Recommend URL"
+	},
+	"act_picture_url1": {
+		"ja": "写真URL1",
+		"en": "Picture URL1"
+	},
+	"act_picture_url2": {
+		"ja": "写真URL2",
+		"en": "Picture URL2"
+	},
+	"act_picture_url3": {
+		"ja": "写真URL3",
+		"en": "Picture URL3"
+	},
+	"act_quiz_comment": {
+		"ja": "クイズを出したい人は、下に書いてね",
+		"en": "If you want to give a quiz, please write below"
+	},
+	"act_quiz": {
+		"ja": "クイズの問題",
+		"en": "Quiz questions"
+	},
+	"act_quiz_choice": {
+		"ja": "選択肢",
+		"en": "Choice"
+	},
+	"act_quiz_answer": {
+		"ja": "答え",
+		"en": "Answer"
+	},
+	"act_quiz_hint_url": {
+		"ja": "ヒントURL",
+		"en": "Hint URL"
+	}
+}

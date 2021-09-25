@@ -1,4 +1,7 @@
 {
+    "icon": {
+        "path": "maki-icon"
+    },
     "system": {
         "_OverPassServer": "https://overpass.nchc.org.tw/api/interpreter",
         "__OverPassServer": "https://overpass.kumi.systems/api/interpreter",
@@ -71,11 +74,6 @@
             "Opacity": 0.1,
             "fillOpacity": 0.1,
             "timer": 2000
-        },
-        "icon": {
-            "x": 40,
-            "y": 60,
-            "scale": 1.4
         },
         "text": {
             "view": true,

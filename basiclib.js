@@ -80,9 +80,16 @@ class Basic {
             return false;
         };
     }
-    
+
     convLinkTag(url) {
         return (/^(ftp|http|https):\/\/[^ "]+$/.test(url)) ? `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>` : "";
+    }
+
+    getStyleSheetValue(cssname, property) {
+        let element = document.querySelector(cssname);
+        if (!element || !property) return null;
+        let style = window.getComputedStyle(element);
+        return style.getPropertyValue(property);
     }
 
     async makeSHA256(text) {
