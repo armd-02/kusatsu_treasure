@@ -176,7 +176,7 @@ class CMapMaker {
 		let title = "", message = "";
 		for (let i = 0; i < Conf.osm[target].views.length; i++) {
 			if (tags[Conf.osm[target].views[i]] !== void 0) {
-				title = `<img src="./image/${micon}">${tags[Conf.osm[target].views[i]]}`;
+				title = `<img src="./${Conf.icon.path}/${micon}">${tags[Conf.osm[target].views[i]]}`;
 				break;
 			}
 		}
