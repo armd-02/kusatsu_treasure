@@ -70,6 +70,8 @@ class modal_Activities {
                             case "select":
                             case "text":
                             case "textarea":
+                            case "quiz_choice":
+                            case "quiz_textarea":
                                 chtml += `<strong>${glot.get(form[key].glot)}</strong><br>${gdata.replace(/\r?\n/g, '<br>')}<br><br>`;
                                 break;
                             case "url":
