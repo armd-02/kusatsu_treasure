@@ -118,11 +118,12 @@ var Marker = (function () {								// Marker closure
 			console.log("Marker.set: " + target);
 			Marker.delete(target);
 			markers[target] = [];
+			let LL = GeoCont.get_LL();
 			let all = poiCont.get_target(target);
 			if (all.pois.geojson !== undefined) {		// pois表示
 				all.pois.geojson.forEach(function (geojson, idx) {
 					let poi = { "geojson": all.pois.geojson[idx], "targets": all.pois.targets[idx], "latlng": all.pois.latlng[idx], "enable": all.pois.enable[idx] };
-					if (poi.enable) {
+					if (poi.enable && GeoCont.check_inner(poi.latlng,LL)) {
 						make_marker({ target: target, poi: poi, act: all.acts, langname: 'name' }).then(marker => {
 							if (marker !== undefined) marker.forEach(val => markers[target].push(val));	// 複数Marker対応(Wikipediaの解説など)
 						});

@@ -16,7 +16,8 @@
             "post_box": "post_box.svg",
             "post_office": "post-JP.svg",
             "school": "school-JP.svg",
-            "community_centre": "town-hall.svg"
+            "community_centre": "town-hall.svg",
+            "toilets":"toilet.svg"
         },
         "shop": {
             "alcohol": "alcohol-shop.svg",

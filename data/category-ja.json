@@ -16,7 +16,8 @@
             "post_box": "郵便ポスト",
             "post_office": "郵便局",
             "school": "学校",
-            "community_centre": "公民館"
+            "community_centre": "公民館",
+            "toilets":"トイレ"
         },
         "shop": {
             "alcohol": "酒屋",

@@ -216,6 +216,10 @@ var GeoCont = (function () {
             return (found > -1) ? idx : false;
         },
 
+        check_inner: (latlng, LL) => {          // latlngがLL(get_LL)範囲内であれば true
+            return (LL.NW.lat > latlng[0] && LL.SE.lat < latlng[0] && LL.NW.lng < latlng[1] && LL.SE.lng > latlng[1]);
+        },
+
         get_LL: () => {			// LatLngエリアの設定 [経度lng,緯度lat]
             return { "NW": map.getBounds().getNorthWest(), "SE": map.getBounds().getSouthEast() };
         },

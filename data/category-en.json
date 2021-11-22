@@ -16,7 +16,8 @@
             "post_box":"POST box",
             "post_office":"POST Office",
             "school":"School",
-            "community_centre": "community center"
+            "community_centre": "community center",
+            "toilets":"toilet"
         },
         "shop": {
             "alcohol": "alcohol",
