@@ -218,6 +218,19 @@
                 "operator"
             ]
         },
+        "telephone": {
+            "overpass": [
+                "node[\"amenity\"=\"telephone\"]",
+                "way[\"amenity\"=\"telephone\"]"
+            ],
+            "tags": [
+                "amenity=telephone"
+            ],
+            "views": [
+                "name",
+                "operator"
+            ]
+        },
         "historic": {
             "overpass": [
                 "node[\"historic\"]",

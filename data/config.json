@@ -16,6 +16,7 @@
         "station",
         "post_box",
         "toilets",
+        "telephone",
         "wikipedia"
     ],
     "list_targets": [

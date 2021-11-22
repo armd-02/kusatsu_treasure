@@ -17,7 +17,8 @@
             "post_office": "郵便局",
             "school": "学校",
             "community_centre": "公民館",
-            "toilets":"トイレ"
+            "toilets":"トイレ",
+            "telephone":"公衆電話"
         },
         "shop": {
             "alcohol": "酒屋",
