@@ -67,7 +67,7 @@
             "name": {
                 "glot": "act_name",
                 "type": "text",
-                "gsheet": "title"
+                "gsheet": "name"
             },
             "grade": {
                 "glot": "act_grade",
