@@ -19,9 +19,13 @@
         "telephone",
         "wikipedia"
     ],
-    "list_targets": [
-        "activity"
-    ],
+    "listTable": {
+        "targets": [
+            "activity"
+        ],
+        "update_mode": "no static",
+        "playback": true
+    },
     "default": {
         "keep_default_view": false,
         "default_view": [
@@ -46,6 +50,10 @@
         "zoomSnap": 0.5,
         "iconViewZoom": 14,
         "bookmark": true
+    },
+    "playback": {
+        "zoomLevel": 15,
+        "timer": 4000
     },
     "activities": {
         "header": "",

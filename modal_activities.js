@@ -50,6 +50,18 @@ class modal_Activities {
                 <i class="fas fa-clone"></i>
             </button><br><br>`;
             switch (newmode) {
+                case "libc":
+                    glot_key = "libc";
+                    let mm = !parseInt(act.mm) ? "--" : ("00" + act.mm).substr(-2);
+                    let dd = !parseInt(act.dd) ? "--" : ("00" + act.dd).substr(-2);
+                    let act_ymd = `${act.yyyy}/${mm}/${dd}`;
+                    clone.querySelector("span").innerHTML = act_ymd + " " + act.title;
+                    chtml += `<strong>${glot.get("libc_title")}</strong><br>${act_ymd} ${act.title}<br><br>`;
+                    chtml += "<strong>" + glot.get("libc_agency") + "</strong><br>" + act.agency + "<br><br>";
+                    chtml += "<strong>" + glot.get("libc_authority") + "</strong><br>" + act.authority.replace(/\r?\n/g, '<br>') + "<br><br>";
+                    chtml += "<strong>" + glot.get("libc_area") + "</strong><br>" + act.area + "<br><br>";
+                    chtml += "<strong>" + glot.get("libc_ymd") + `</strong><br>${act_ymd}<br><br>`;
+                    break;
                 case "memorial":
                     glot_key = "memories";
                     chtml += "<strong>" + glot.get("memories_title") + "</strong><br>" + act.title + "<br><br>";

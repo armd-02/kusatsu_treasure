@@ -13,7 +13,9 @@ class GoogleSpreadSheet {
 			$.ajax({ type: "get", url: GET_Url, dataType: "jsonp", cache: false, jsonpCallback: 'GDocReturn' }).then(function (json) {
 				console.log("GoogleSpreadSheet: GET: OK");
 				let pattern = /on[\w]+=[\"\']?[^>]*[\"\']?>/si;
-				json.forEach(val => val.body = val.body.replace(pattern, '>'));	// Minimal sanitization for "on~" tags(onclick,onload etc)
+				json.forEach(val => {
+					Object.keys(val).forEach(key => { val[key] = typeof val[key] == "string" ? val[key].replace(pattern, '>') : val[key] });
+				});	// Minimal sanitization for "on~" tags(onclick,onload etc)
 				gSpreadSheet.last_getdate = new Date(Date.now());
 				resolve(json);
 			}, () => {
@@ -23,7 +25,7 @@ class GoogleSpreadSheet {
 		});
 	};
 
-	get_salt(GET_Url,userid){			// サーバーからSaltを取得する
+	get_salt(GET_Url, userid) {			// サーバーからSaltを取得する
 		return new Promise(function (resolve, reject) {
 			let ggeturl = GET_Url + '?userid=' + userid;
 			console.log("GoogleSpreadSheet: GET: " + ggeturl);
