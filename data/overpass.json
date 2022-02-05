@@ -1,5 +1,12 @@
 {
     "osm": {
+        "*":{
+            "tags":[],
+            "views": [
+                "name",
+                "operator"
+            ]
+        },
         "pub": {
             "overpass": [
                 "node[\"amenity\"]",
@@ -188,15 +195,11 @@
         "garden": {
             "overpass": [
                 "way[\"leisure\"=\"garden\"]",
-                "way[\"landuse\"=\"grass\"]",
-                "way[\"natural\"=\"scrub\"]",
                 "way[\"landuse\"=\"farmland\"]",
                 "way[\"landuse\"=\"allotments\"]"
             ],
             "tags": [
                 "leisure=garden",
-                "landuse=grass",
-                "natural=scrub",
                 "landuse=farmland",
                 "landuse=allotments"
             ],
@@ -205,42 +208,41 @@
                 "operator"
             ]
         },
-        "toilets": {
+        "information":{
             "overpass": [
-                "node[\"amenity\"=\"toilets\"]",
-                "way[\"amenity\"=\"toilets\"]"
-            ],
-            "tags": [
-                "amenity=toilets"
-            ],
-            "views": [
-                "name",
-                "operator"
-            ]
-        },
-        "telephone": {
-            "overpass": [
-                "node[\"amenity\"=\"telephone\"]",
-                "way[\"amenity\"=\"telephone\"]"
-            ],
-            "tags": [
-                "amenity=telephone"
-            ],
-            "views": [
-                "name",
-                "operator"
-            ]
-        },
-        "historic": {
-            "overpass": [
-                "node[\"historic\"]",
-                "way[\"historic\"]",
                 "node[\"tourism\"=\"information\"]",
                 "way[\"tourism\"=\"information\"]"
             ],
             "tags": [
                 "historic",
                 "tourism=information"
+            ],
+            "views": [
+                "name",
+                "operator"
+            ]
+        },
+        "wayside_shrine": {
+            "overpass": [
+                "node[\"historic\"=\"wayside_shrine\"]",
+                "way[\"historic\"=\"wayside_shrine\"]"
+            ],
+            "tags": [
+                "historic=wayside_shrine"
+            ],
+            "views": [
+                "name"
+            ]
+        },
+        "historic": {
+            "overpass": [
+                "node[\"historic\"]",
+                "way[\"historic\"]"
+            ],
+            "tags": [
+                "historic=archaeological_site",
+                "historic=castle",
+                "historic=memorial"
             ],
             "views": [
                 "name",
@@ -309,6 +311,25 @@
             ],
             "tags": [
                 "amenity=post_box"
+            ],
+            "views": [
+                "name",
+                "operator"
+            ]
+        },
+        "place": {
+            "overpass": [
+                "way[\"place\"=\"suburb\"]",
+                "node[\"place\"=\"suburb\"]",
+                "way[\"place\"=\"quarter\"]",
+                "node[\"place\"=\"quarter\"]",
+                "way[\"place\"=\"neighbourhood\"]",
+                "node[\"place\"=\"neighbourhood\"]"
+            ],
+            "tags": [
+                "place=suburb",
+                "place=quarter",
+                "place=neighbourhood"
             ],
             "views": [
                 "name",

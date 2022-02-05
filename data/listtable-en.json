@@ -7,26 +7,28 @@
                     "hidden": true
                 },
                 {
-                    "id": "date",
-                    "name": "Date"
+                    "id": "updatetime",
+                    "name": "Date",
+                    "hidden": true
                 },
                 {
                     "id": "category",
-                    "name": "Category",
-                    "hidden": true
+                    "name": "Category"
                 },
                 {
                     "id": "name",
                     "name": "Title"
                 }
             ],
-            "osm": [
-                "date",
-                "category",
+            "poi_fields": [
+                "id",
+                "timestamp",
+                "#category",
                 "name"
             ],
-            "googlesheet": [
-                "startdatetime",
+            "act_fields": [
+                "id",
+                "updatetime",
                 "category",
                 "title"
             ]

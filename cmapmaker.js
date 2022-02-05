@@ -1,43 +1,3 @@
-/*	Main Process */
-"use strict";
-
-// Global Variable
-var Conf = {};					// Config Praams
-const LANG = (window.navigator.userLanguage || window.navigator.language || window.navigator.browserLanguage).substr(0, 2) == "ja" ? "ja" : "en";
-const FILES = [
-	"./baselist.html", "./data/config.json", './data/system.json', './data/overpass.json', `./data/marker.json`,
-	`./data/category-${LANG}.json`, `data/list-${LANG}.json`, `./data/glot_custom.json`, `data/glot_system.json`];
-const glot = new Glottologist();
-
-// initialize
-console.log("Welcome to MapMaker.");
-window.addEventListener("DOMContentLoaded", function () {
-	let jqXHRs = [];
-	for (let key in FILES) { jqXHRs.push($.get(FILES[key])) };
-	$.when.apply($, jqXHRs).always(function () {
-		let arg = {}, basehtml = arguments[0][0];								// Get Menu HTML
-		for (let i = 1; i <= 6; i++) arg = Object.assign(arg, arguments[i][0]);	// Make Config Object
-		Object.keys(arg).forEach(key1 => {
-			Conf[key1] = {};
-			Object.keys(arg[key1]).forEach((key2) => Conf[key1][key2] = arg[key1][key2]);
-		});
-		glot.data = Object.assign(glot.data, arguments[7][0]);					// import glot data
-		glot.data = Object.assign(glot.data, arguments[8][0]);					// import glot data
-
-		window.onresize = winCont.window_resize;      	// 画面サイズに合わせたコンテンツ表示切り替え
-		// document.title = glot.get("title");		// Title(no change / Google検索で日本語表示させたいので)
-		cMapmaker.init(basehtml);					// Mapmaker Initialize
-		if (Conf.google.Analytics !== "") {			// Google Analytics
-			let AnalyticsURL = '<script async src="https://www.googletagmanager.com/gtag/js?id=' + Conf.default.GoogleAnalytics + '"></script>';
-			document.getElementsByTagName('head').insertAdjacentHTML("beforeend", AnalyticsURL);
-			window.dataLayer = window.dataLayer || [];
-			function gtag() { dataLayer.push(arguments); };
-			gtag('js', new Date());
-			gtag('config', Conf.google.Analytics);
-		};
-	});
-});
-
 class CMapMaker {
 
 	constructor() {
@@ -53,9 +13,7 @@ class CMapMaker {
 		leaflet.init();						// Leaflet Initialize
 
 		Promise.all([
-			gSpreadSheet.get(Conf.google.AppScript),
-			cMapmaker.static_check(),
-			cMapmaker.poi_get()				// get_zoomなどleafletの情報が必要なためleaflet.init後に実行
+			gSheet.get(Conf.google.AppScript), static_load(), cMapmaker.poi_get()				// get_zoomなどleafletの情報が必要なためleaflet.init後に実行
 		]).then(results => {
 			// leaflet add control
 			leaflet.controlAdd("bottomleft", "zoomlevel", "");
@@ -88,23 +46,23 @@ class CMapMaker {
 			winCont.splash(false);
 			console.log("cmapmaker: initial end.");
 		});
-	}
 
-	static_check() {	// check static osm mode
-		return new Promise((resolve, reject) => {
-			if (!Conf.static.mode) {		// static mode以外は即終了
-				resolve("no static mode");
-			} else {
-				$.ajax({ "type": 'GET', "dataType": 'json', "url": Conf.static.osmjson, "cache": false }).done(function (data) {
-					let ovanswer = OvPassCnt.set_osmjson(data);
-					poiCont.add_geojson(ovanswer);
-					resolve(ovanswer);
-				}).fail(function (jqXHR, statusText, errorThrown) {
-					console.log(statusText);
-					reject(jqXHR, statusText, errorThrown);
-				});;
-			}
-		})
+		function static_load() {	// check static osm mode
+			return new Promise((resolve, reject) => {
+				if (!Conf.static.mode) {		// static mode以外は即終了
+					resolve("no static mode");
+				} else {
+					$.ajax({ "type": 'GET', "dataType": 'json', "url": Conf.static.osmjson, "cache": false }).done(function (data) {
+						let ovanswer = OvPassCnt.set_osmjson(data);
+						poiCont.add_geojson(ovanswer);
+						resolve(ovanswer);
+					}).fail(function (jqXHR, statusText, errorThrown) {
+						console.log(statusText);
+						reject(jqXHR, statusText, errorThrown);
+					});;
+				}
+			})
+		}
 	}
 
 	licence() {			// About license
@@ -113,15 +71,18 @@ class CMapMaker {
 	}
 
 	mode_change(mode) {	// mode change(list or map)
-		if (this.status !== "mode_change" && (this.last_modetime + 300) < Date.now()) {
-			this.status = "mode_change";
+		if (cMapmaker.status !== "mode_change" && (cMapmaker.last_modetime + 300) < Date.now()) {
+			cMapmaker.status = "mode_change";
 			let params = { 'map': ['down', 'remove', 'start'], 'list': ['up', 'add', 'stop'] };
 			mode = !mode ? (list_collapse.classList.contains('show') ? 'map' : 'list') : mode;
-			console.log('mode_change: ' + mode + ' : ' + this.last_modetime + " : " + Date.now());
+			console.log('mode_change: ' + mode + ' : ' + cMapmaker.last_modetime + " : " + Date.now());
 			list_collapse_icon.className = 'fas fa-chevron-' + params[mode][0];
 			list_collapse.classList[params[mode][1]]('show');
-			this.last_modetime = Date.now();
-			this.status = "normal";
+			cMapmaker.last_modetime = Date.now();
+			cMapmaker.status = "normal";
+			if (mode == "map") leaflet.start();
+		}else{
+			console.log("何もしないよー");
 		};
 	}
 
@@ -151,9 +112,9 @@ class CMapMaker {
 					poiCont.add_geojson(ovanswer);
 					console.log("cMapmaker: poi_get end(success).");
 					resolve({ "update": true });
-				}).catch((jqXHR) => {
+				}).catch(() => {
 					winCont.spinner(false);
-					console.log("cMapmaker: poi_get end(overror). " + jqXHR.stack);
+					console.log("cMapmaker: poi_get end(overror). ");
 					resolve({ "update": false });
 				});
 			};
@@ -177,19 +138,18 @@ class CMapMaker {
 			history.replaceState('', '', location.pathname + location.hash);
 			cMapmaker.open_osmid = "";
 			cMapmaker.detail = false;
+			leaflet.start();
 		};
 		if (cMapmaker.detail) detail_close();
 		let osmobj = poiCont.get_osmid(osmid);
 		let tags = osmobj == undefined ? { "targets": [] } : osmobj.geojson.properties;
-		let categorys = Object.keys(Conf.category);
-		let keyn = categorys.find(key => tags[key] !== undefined);
-		let icon_name = Conf.marker_tag[keyn][tags[keyn]];
-		let target = osmobj.targets[0];
+		tags["*"] = "*";
+		let target = osmobj == undefined ? "*" : osmobj.targets[0];
 		let category = poiCont.get_catname(tags);
 		let title = "", message = "";
 		for (let i = 0; i < Conf.osm[target].views.length; i++) {
 			if (tags[Conf.osm[target].views[i]] !== void 0) {
-				title = `<img src="./${Conf.icon.path}/${icon_name}">${tags[Conf.osm[target].views[i]]}`;
+				title = `<img src="./${Conf.icon.path}/${poiMarker.get_icon(tags)}">${tags[Conf.osm[target].views[i]]}`;
 				break;
 			}
 		}
@@ -277,7 +237,6 @@ class CMapMaker {
 	}
 
 };
-var cMapmaker = new CMapMaker();
 
 class cMapEvents {
 
@@ -291,7 +250,7 @@ class cMapEvents {
 		map.on('zoomend', () => cmap_events.map_zoom());	// ズーム終了時に表示更新
 	}
 
-	map_move(e) {                					// map.moveend発生時のイベント
+	map_move() {                					// map.moveend発生時のイベント
 		console.log("cmapmaker: move event start.");
 		if (this.busy > 1) return;					// 処理中の時は戻る
 		if (this.busy == 1) clearTimeout(this.id);	// no break and cancel old timer.
@@ -300,11 +259,13 @@ class cMapEvents {
 			console.log("cmapmaker: move event end.");
 			this.busy = 2;
 			cMapmaker.poi_get().then((status) => {
+				this.busy = 0;
 				cMapmaker.poi_view();
 				if (status.update && Conf.listTable.update_mode !== "static") {
 					listTable.make(Object.values(Conf.listTable.targets));	// view all list
+				} else {
+					cmap_events.map_move();	// 失敗時はリトライ(接続先はoverpass.jsで変更)
 				};
-				this.busy = 0;
 			}).catch(() => {
 				this.busy = 0;
 			});
@@ -318,4 +279,3 @@ class cMapEvents {
 		$("#zoomlevel").html("<h2 class='zoom'>" + message + "</h2>");
 	}
 }
-var cmap_events = new cMapEvents();

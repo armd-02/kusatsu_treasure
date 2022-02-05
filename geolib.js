@@ -54,8 +54,8 @@ class Leaflet {
 
     start() {
         ["dragging", "touchZoom", "touchZoom"].forEach(key => map[key].enable());
-        this.Control["maps"].addTo(map);
-        this.Control["locate"].addTo(map);
+        leaflet.Control["maps"].addTo(map);
+        leaflet.Control["locate"].addTo(map);
         map.zoomControl.addTo(map);
         if (map.tap) map.tap.enable();
         document.getElementById('mapid').style.cursor = 'grab';
@@ -63,8 +63,8 @@ class Leaflet {
 
     stop() {
         ["dragging", "touchZoom", "touchZoom"].forEach(key => map[key].disable());
-        this.Control["maps"].remove(map);
-        this.Control["locate"].remove(map);
+        leaflet.Control["maps"].remove(map);
+        leaflet.Control["locate"].remove(map);
         map.zoomControl.remove(map);
         if (map.tap) map.tap.disable();
         document.getElementById('mapid').style.cursor = 'default';
@@ -93,8 +93,18 @@ class Leaflet {
         }).addTo(map);
     };
 
+    geojsonAdd(data) {
+        L.geoJSON(data, {
+            style: function (feature) {
+                return {
+                    color: feature.properties.stroke,
+                    weight: feature.properties["stroke-width"]
+                };
+            }
+        }).addTo(map);
+    }
+
 };
-var leaflet = new Leaflet();
 
 // GeoJson Control
 var GeoCont = (function () {

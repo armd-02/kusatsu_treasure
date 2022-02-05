@@ -1,52 +1,77 @@
 {
     "marker_tag": {
+        "*": {
+            "*": "marker-stroked.svg"
+        },
         "amenity": {
-            "library": "library.svg",
             "bar": "bar.svg",
             "bench": "bench.svg",
             "cafe": "cafe.svg",
+            "community_centre": "town-hall.svg",
             "drinking_water": "drinking-water.svg",
             "fast_food": "fast-food.svg",
+            "ferry_terminal": "ferry.svg",
             "food_court": "restaurant.svg",
+            "hospital": "hospital.svg",
             "ice_cream": "ice-cream.svg",
+            "library": "library.svg",
+            "place_of_worship": "place-of-worship.svg",
+            "police": "police.svg",
+            "post_box": "post_box.svg",
+            "post_office": "post-JP.svg",
             "pub": "beer.svg",
             "restaurant": "restaurant.svg",
             "vending_machine": "vending_machine.svg",
-            "place_of_worship": "place-of-worship.svg",
-            "post_box": "post_box.svg",
-            "post_office": "post-JP.svg",
             "school": "school-JP.svg",
-            "community_centre": "town-hall.svg",
-            "toilets":"toilet.svg",
-            "telephone":"telephone.svg"
+            "townhall": "town-hall.svg",
+            "theatre": "theatre.svg"
+        },
+        "assembly_point:tsunami": {
+            "yes": "shelter.svg"
+        },
+        "attraction": {
+            "animal": "veterinary.svg"
         },
         "shop": {
+            "agrarian": "agrarian.svg",
             "alcohol": "alcohol-shop.svg",
             "bakery": "bakery.svg",
             "beverages": "bottles.svg",
+            "books": "book_store.svg",
+            "bicycle": "bicycle.svg",
             "brewing_supplies": "storage_fermenter.svg",
             "butcher": "cleaver.svg",
             "cheese": "cheese.svg",
             "chocolate": "confectionery.svg",
             "coffee": "hot_drink_cup.svg",
+            "car": "car.svg",
+            "car_parts": "car-repair.svg",
             "confectionery": "confectionery.svg",
             "convenience": "shopping-basket.svg",
             "deli": "meat.svg",
             "dairy": "cheese.svg",
+            "dry_cleaning": "clothes_hanger.svg",
+            "electronics": "electronic.svg",
             "farm": "apple-alt.svg",
+            "florist": "florist.svg",
             "frozen_food": "shop.svg",
+            "funeral_directors": "cemetery.svg",
             "greengrocer": "carrot.svg",
             "gift": "gift.svg",
+            "hairdresser": "hairdresser.svg",
             "health_food": "shop.svg",
             "ice_cream": "ice-cream.svg",
+            "kiosk": "store.svg",
+            "mall": "shopping_mall.svg",
+            "motorcycle": "motorcycle.svg",
             "pasta": "restaurant.svg",
             "pastry": "bakery.svg",
             "seafood": "restaurant-seafood.svg",
             "spices": "spice_bottle.svg",
+            "tobacco": "pipe.svg",
             "tea": "teahouse.svg",
             "water": "water.svg",
             "wine": "alcohol-shop.svg",
-            "kiosk": "store.svg",
             "supermarket": "grocery.svg",
             "variety_store": "shop.svg"
         },
@@ -68,15 +93,6 @@
         },
         "social_facility": {
             "shelter": "shelter.svg"
-        },
-        "assembly_point:tsunami": {
-            "yes": "shelter.svg"
-        },
-        "wikipedia": {
-            "*": "wikipedia.svg"
-        },
-        "attraction": {
-            "animal": "veterinary.svg"
         },
         "playground": {
             "structure": "play_structure.svg",
@@ -114,7 +130,11 @@
             "museum": "museum.svg"
         },
         "historic": {
-            "memorial": "monument.svg"
+            "archaeological_site": "archaeological-site.svg",
+            "castle": "castle-JP.svg",
+            "memorial": "monument.svg",
+            "monument": "monument.svg",
+            "wayside_shrine": "ojizou.svg"
         },
         "information": {
             "board": "info_board.svg",
@@ -128,7 +148,13 @@
             "torii": "shinto.svg",
             "lamp": "lantern.svg"
         },
+        "landuse": {
+            "farmland": "farm.svg",
+            "religious": "wikipedia.svg",
+            "industrial": "industry.svg"
+        },
         "leisure": {
+            "garden": "garden-centre.svg",
             "pitch": "pitch.svg",
             "park": "tree_and_bench.svg",
             "playground": "playground.svg",
@@ -139,6 +165,14 @@
         },
         "public_transport": {
             "station": "train.svg"
+        },
+        "place": {
+            "suburb": "triangle.svg",
+            "quarter": "triangle.svg",
+            "neighbourhood": "triangle-stroked.svg"
+        },
+        "wikipedia": {
+            "*": "wikipedia.svg"
         }
     }
 }

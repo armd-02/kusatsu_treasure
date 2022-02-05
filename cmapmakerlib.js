@@ -56,12 +56,12 @@ var poiCont = (function () {
 			return adata.filter(a => a.osmid == osmid);
 		},
 		get_catname: (tags) => {          								// get Category Name from Conf.category(Global Variable)
-			let categorys = Object.keys(Conf.category);
-			let key1 = categorys.find(key => tags[key] !== undefined);
-			let key2 = tags[key1] == undefined ? "" : tags[key1];
+			let key1 = Conf.category_keys.find(key => (tags[key] !== undefined) && key !== "*");
+			key1 = key1 == undefined ? "*" : key1;
+			let key2 = tags[key1] == undefined ? "*" : tags[key1];
 			let catname = (key2 !== "") ? Conf.category[key1][key2] : "";   // known tags
-			if (catname == undefined) console.log("get_catname:" + key1 + "," + key2);
-			return (catname == undefined) ? "" : catname;
+			if (catname == undefined) console.log("get_catname: no key: " + key1 + "," + key2);
+			return (catname == undefined) ? "-" : catname;
 		},
 		get_wikiname: (tags) => {          								// get Wikipedia Name from tag
 			let wikiname = tags["wikipedia"] ? tags["wikipedia"].split(':')[1] : "";	// value値の":"の右側を返す
@@ -74,10 +74,15 @@ var poiCont = (function () {
 		list: function (targets) {              						// Grid.js向きの配列を出力
 			let pois = filter_geojson(targets), datas = []; 			// targetsに指定されたpoiのみフィルター
 			pois.geojson.forEach((node) => {
-				let tags = node.properties;
-				let name = tags.name == undefined ? "-" : tags.name;
-				let category = poiCont.get_catname(tags);
-				datas.push([node.id, "-", category, name]);
+				let tags = node.properties, data = [];
+				Conf.list.columns.poi_fields.forEach(key => {
+					if (key == "#category") {							// #は内部データを利用する意味
+						data.push(poiCont.get_catname(tags));			// category追加
+					} else {
+						data.push(tags[key] == undefined ? "-" : tags[key]);	// osmtag追加
+					};
+				});
+				datas.push(data);
 			});
 			if (targets.indexOf(Conf.google.targetName) > -1) {			// targets内にgooglesheetがある場合
 				adata.forEach((line) => {
@@ -90,7 +95,15 @@ var poiCont = (function () {
 								datas.push([line.id, `${line.yyyy}/${mm}/${dd}`, line.category, line.title]);
 								break;
 							default:
-								datas.push([line.id, basic.formatDate(new Date(line.updatetime), "YYYY/MM/DD"), line.category, line.title]);
+								let data = [];
+								Conf.list.columns.act_fields.forEach(key => {
+									if (key.indexOf("datetime") > -1) {							// フィール名に日時を含む場合
+										data.push(basic.formatDate(new Date(line.updatetime), "YYYY/MM/DD"));
+									} else {
+										data.push(line[key] == undefined ? "-" : line[key]);	// gsheet追加
+									}
+								});
+								datas.push(data);
 								break;
 						};
 					};
@@ -119,47 +132,46 @@ var poiCont = (function () {
 	};
 })();
 
-class PoiMarker {
+class poiMarker {
 
-	constructor() {
-		this.markers = {};
+	static markers = {};
+
+	static get_icon(tags) {		// get icon filename
+		let keyn = Conf.category_keys.find(key => (tags[key] !== undefined) && key !== "*");
+		keyn = keyn == undefined ? "*" : keyn;		// カテゴリに無いPOIへの対応
+		let keyv = tags[keyn] == undefined ? "*" : tags[keyn];
+		try {
+			let icon = Conf.marker_tag[keyn][keyv];
+			return icon == undefined ? Conf.marker_tag['*']['*'] : icon;
+		} catch {
+			console.log("poiMarker.get_icon: no icon");
+			return Conf.marker_tag['*']['*'];
+		};
 	};
 
-	set(target, actonly) {								// Poi表示
+	static set(target, actonly) {								// Poi表示
 
 		const make_marker = function (params) {		// Make Marker(Sometimes multiple markers are returned)
 			return new Promise((resolve, reject) => {
-				let categorys = Object.keys(Conf.category), icon_name, name;
 				let tags = params.poi.geojson.properties.tags == undefined ? params.poi.geojson.properties : params.poi.geojson.properties.tags;
-				name = tags[params.langname] == undefined ? tags.name : tags[params.langname];
+				let name = tags[params.langname] == undefined ? tags.name : tags[params.langname];
 				name = (name == "" || name == undefined) ? "" : name;
-
-				let keyn = categorys.find(key => tags[key] !== undefined);
-				try {
-					var keyv = (keyn !== undefined) ? Conf.marker_tag[keyn][tags[keyn]] : undefined;
-				} catch {
-					console.log("name" + ": " + keyn + "=" + tags[keyn]);
-				};
 				let actlists = poiCont.get_actlist(params.poi.geojson.id);
-				if (keyn !== undefined && keyv !== undefined) {	// in category
-					icon_name = params.filename == undefined ? Conf.marker_tag[keyn][tags[keyn]] : params.filename;
-					let size, html = `<div class="d-flex align-items-center">`;
-					let span_width = name !== "" ? name.length * Conf.effect.text.size : 0;
-					let css_name = actlists.length > 0 ? "icon_attention" : "icon_normal";
-					size = parseInt(basic.getStyleSheetValue(css_name, "height"));
-					if (actlists.length > 0) html += `<img class="attention" src="./image/attention_noframe.svg">`;
-					html += `<img class="${css_name}" src="./${Conf.icon.path}/${icon_name}" icon-name="${name}">`;
-					let span = `<span class="icon" style="font-size: ${Conf.effect.text.size}px">${name}</span>`;
-					if (name !== "" && Conf.effect.text.view) html += span;
-					let icon = L.divIcon({ "className": "", "iconSize": [size + span_width, size], "iconAnchor": [size / 2, size / 2], "html": html + "</div>" });
-					let marker = L.marker(new L.LatLng(params.poi.latlng[0], params.poi.latlng[1]), { icon: icon, draggable: false });
-					marker.addTo(map).on('click', e => { cMapmaker.detail_view(e.target.mapmaker_id) });
-					marker.mapmaker_id = params.poi.geojson.id;
-					marker.mapmaker_key = params.target;
-					marker.mapmaker_lang = params.langname;
-					// tags.mapmaker_icon = icon_name;		// tagに紛れ込ませる(detail_viewで利用)
-					resolve([marker]);
-				};
+				let size, html = `<div class="d-flex align-items-center">`;
+				let span_width = name !== "" ? name.length * Conf.effect.text.size : 0;
+				let css_name = actlists.length > 0 ? "icon_attention" : "icon_normal";
+				size = parseInt(basic.getStyleSheetValue(css_name, "height"));
+				if (actlists.length > 0) html += `<img class="attention" src="./image/attention_noframe.svg">`;
+				html += `<img class="${css_name}" src="./${Conf.icon.path}/${poiMarker.get_icon(tags)}" icon-name="${name}">`;
+				let span = `<span class="icon" style="font-size: ${Conf.effect.text.size}px">${name}</span>`;
+				if (name !== "" && Conf.effect.text.view) html += span;
+				let icon = L.divIcon({ "className": "", "iconSize": [size + span_width, size], "iconAnchor": [size / 2, size / 2], "html": html + "</div>" });
+				let marker = L.marker(new L.LatLng(params.poi.latlng[0], params.poi.latlng[1]), { icon: icon, draggable: false });
+				marker.addTo(map).on('click', e => { cMapmaker.detail_view(e.target.mapmaker_id) });
+				marker.mapmaker_id = params.poi.geojson.id;
+				marker.mapmaker_key = params.target;
+				marker.mapmaker_lang = params.langname;
+				resolve([marker]);
 			});
 		};
 
@@ -184,12 +196,13 @@ class PoiMarker {
 		};
 	}
 
-	get(target, osmid) {				// Poi取得
+	static get(target, osmid) {				// Poi取得
 		let idx = poiMarker.markers[target].findIndex(val => val.mapmaker_id == osmid);
 		let marker = poiMarker.markers[target][idx];
 		return marker;
 	}
-	qr_add(target, osmid, url, latlng, text) {
+
+	static qr_add(target, osmid, url, latlng, text) {
 		let idx = poiMarker.markers[target].findIndex(val => val.mapmaker_id == osmid);
 		let qrcode = new QRCode({ content: url, join: true, container: "svg", width: 128, height: 128 });
 		let data = qrcode.svg();
@@ -203,7 +216,7 @@ class PoiMarker {
 		map.closePopup();
 	}
 
-	select(poiid, detail) {								// Map move to PoiId & Zoom(config)
+	static select(poiid, detail) {								// Map move to PoiId & Zoom(config)
 		return new Promise((resolve, reject) => {
 			let poi = poiCont.get_osmid(poiid);
 			let zoomlv = Conf.default.act_iconViewZoom >= map.getZoom() ? Conf.default.act_iconViewZoom : map.getZoom();
@@ -238,9 +251,9 @@ class PoiMarker {
 		});
 	}
 
-	all_clear() { Object.keys(poiMarker.markers).forEach((target) => poidelete(target)) }	// all delete
+	static all_clear() { Object.keys(poiMarker.markers).forEach((target) => poidelete(target)) }	// all delete
 
-	delete(target, osmid) {														// Marker delete * don't set pdata
+	static delete(target, osmid) {														// Marker delete * don't set pdata
 		if (osmid == undefined || osmid == "") {	// all osmid
 			if (poiMarker.markers[target] !== undefined) {
 				poiMarker.markers[target].forEach(marker => delmaker(marker));
@@ -262,12 +275,11 @@ class PoiMarker {
 		};
 	}
 };
-var poiMarker = new PoiMarker;
 
 // listTable管理(イベントやPoi情報を表示)
-class ListTable {
+class listTable {
 
-	constructor() {
+	static constructor() {
 		this.grid;
 		this.columns = [];
 		this.lock = false;		// true then disable listtable
@@ -277,7 +289,7 @@ class ListTable {
 		this.flist;
 	};
 
-	init() { // dataListに必要な初期化
+	static init() { // dataListに必要な初期化
 		listTable.columns = Conf.list.columns.common;
 		listTable.height = window.innerHeight * 0.4;
 
@@ -287,7 +299,7 @@ class ListTable {
 				listTable.timeout = 0;
 			};
 			listTable.timeout = window.setTimeout(() => {
-				listTable.flist = listTable._filter(listTable.list, list_keyword.value);
+				listTable.flist = listTable.#filter(listTable.list, list_keyword.value);
 				listTable.grid.updateConfig({ "data": listTable.flist }).forceRender(document.getElementById("tableid"));
 				cMapmaker.mode_change('list');
 			}, 500);
@@ -296,7 +308,7 @@ class ListTable {
 		list_keyword.addEventListener('change', keyword_change);
 
 		function category_change() {        			// カテゴリ名でキーワード検索
-			listTable.flist = list_category.value !== "-" ? listTable._filter(listTable.list, list_category.value) : listTable.list;
+			listTable.flist = list_category.value !== "-" ? listTable.#filter(listTable.list, list_category.value) : listTable.list;
 			listTable.grid.updateConfig({ "data": listTable.flist, "autoWidth": false }).forceRender(document.getElementById("tableid"));
 			cMapmaker.mode_change('list');
 		};
@@ -304,49 +316,53 @@ class ListTable {
 		list_category.addEventListener('change', category_change);
 	};
 
-	make(targets) {  									// リスト表示
+	static make(targets) {  									// リスト表示
 		listTable.list = poiCont.list(targets);
 		listTable.flist = listTable.list;
-		listTable._categorys(listTable.list);
+		listTable.#categorys(listTable.list);
 		let option = { "columns": listTable.columns, "data": listTable.list, "height": listTable.height, sort: true, fixedHeader: true, "autoWidth": false };
 		if (listTable.grid !== undefined) {
 			listTable.grid.updateConfig(option).forceRender(document.getElementById("tableid"));
 		} else {
 			listTable.grid = new gridjs.Grid(option).render(document.getElementById("tableid"));
+			listTable.grid.on('rowClick', listTable.#rowClick);
 		};
-		listTable.grid.on('rowClick', (...args) => {
-			console.log("listTable: rowClick start");
-			if (!listTable.lock) {
-				listTable.lock = true;
-				winCont.spinner(true);
-				try {
-					let actid = args[1].cell(0).data;
-					listTable.select(actid);
-					poiMarker.select(actid, true).then(() => {
-						console.log("listTable: rowClick OK");
-					}).catch(() => {
-						console.log("listTable: rowClick NG");
-					}).then(() => { listTable.lock = false });
-				} catch (error) {
-					winCont.spinner(false);
-					listTable.lock = false;
-				};
-			};
-		});
 	};
 
-	disabled(mode) {
+	static #rowClick(...args) {									// rowClick event
+		console.log("listTable: rowClick start");
+		if (!listTable.lock) {
+			listTable.lock = true;
+			winCont.spinner(true);
+			try {
+				let actid = args[1].cell(0).data;
+				listTable.select(actid);
+				poiMarker.select(actid, true).then(() => {
+					console.log("listTable: rowClick OK");
+					listTable.lock = false
+				}).catch(() => {
+					console.log("listTable: rowClick NG");
+					listTable.lock = false
+				});
+			} catch (error) {
+				winCont.spinner(false);
+				listTable.lock = false;
+			};
+		};
+	};
+
+	static disabled(mode) {
 		list_category.disabled = mode;
 		list_keyword.disabled = mode;
 		listTable.lock = mode;
 	};
 
-	heightSet(height) {									// set table height
+	static heightSet(height) {									// set table height
 		listTable.grid.updateConfig({ "height": height }).forceRender(document.getElementById("tableid"));
 		cMapmaker.mode_change('list');
 	};
 
-	select(actid) {									// リスト選択
+	static select(actid) {										// リスト選択
 		let rows = document.getElementsByClassName('gridjs-tr selected');
 		if (rows.length > 0) Array.from(rows).forEach(row => { row.classList.remove("selected") });
 		let lstidx = listTable.flist.findIndex(elm => elm[0] === actid);
@@ -357,18 +373,16 @@ class ListTable {
 		}
 	}
 
-	_filter(result, keyword) {						// 指定したキーワードで絞り込み
+	static #filter(result, keyword) {							// 指定したキーワードで絞り込み
 		return result.filter((row) => {
 			return row.join(',').indexOf(keyword) > -1;
 		});
 	};
 
-	_categorys(result) {    						// resultを元に種別リストを作成
+	static #categorys(result) {    								// resultを元に種別リストを作成
 		winCont.select_clear(`list_category`);
 		let pois = result.map(data => { return data[2] });
 		pois = pois.filter((x, i, self) => { return self.indexOf(x) === i });
 		pois.map(poi => winCont.select_add(`list_category`, poi, poi));
 	};
-
-};
-var listTable = new ListTable();
+}

@@ -6,6 +6,7 @@ class OverPassControl {
 		this.Cache = { "geojson": [], "targets": [] };   // Cache variable
 		this.LLc = {};
 		this.CacheZoom = 14;
+		this.UseServer = 0;
 	}
 
 	get(targets) {
@@ -13,7 +14,7 @@ class OverPassControl {
 			var LL = GeoCont.get_LL();
 			let CT = GeoCont.ll2tile(map.getBounds().getCenter(), OvPassCnt.CacheZoom);
 			console.log("Check:" + CT.tileX + "." + CT.tileY);
-			if (OvPassCnt.LLc[CT.tileX + "." + CT.tileY] !== void 0 || Conf.static.osmjson !== "") {
+			if (OvPassCnt.LLc[CT.tileX + "." + CT.tileY] !== void 0 || Conf.static.mode) {
 				console.log("OvPassCnt: Cache Hit.");       // Within Cache range
 				resolve(OvPassCnt.Cache);
 			} else {
@@ -26,7 +27,7 @@ class OverPassControl {
 				targets.forEach(key => {
 					if (Conf.osm[key] !== undefined) Conf.osm[key].overpass.forEach(val => query += val + ";");
 				});
-				let url = Conf.system.OverPassServer + `?data=[out:json][timeout:30][bbox:${maparea}];(${query});out body meta;>;out skel;`;
+				let url = Conf.system.OverPassServer[OvPassCnt.UseServer] + `?data=[out:json][timeout:30][bbox:${maparea}];(${query});out body meta;>;out skel;`;
 				console.log("GET: " + url);
 				$.ajax({
 					"type": 'GET', "dataType": 'json', "url": url, "cache": false, "xhr": () => {
@@ -53,6 +54,7 @@ class OverPassControl {
 					resolve(OvPassCnt.Cache);
 				}).fail(function (jqXHR, statusText, errorThrown) {
 					console.log(statusText);
+					OvPassCnt.UseServer = (OvPassCnt.UseServer + 1) % Conf.system.OverPassServer.length;
 					reject(jqXHR, statusText, errorThrown);
 				});
 			};
@@ -62,7 +64,7 @@ class OverPassControl {
 	get_osmid(query) {
 		return new Promise((resolve, reject) => {
 			let params = query.split("/");
-			let url = Conf.system.OverPassServer + `?data=[out:json][timeout:30];${params[0]}(${params[1]});out body meta;>;out skel;`;
+			let url = Conf.system.OverPassServer[OvPassCnt.UseServer] + `?data=[out:json][timeout:30];${params[0]}(${params[1]});out body meta;>;out skel;`;
 			console.log("GET: " + url);
 			$.ajax({ "type": 'GET', "dataType": 'json', "url": url, "cache": false }).done(function (osmxml) {
 				console.log("OvPassCnt.get: done.");
@@ -73,6 +75,7 @@ class OverPassControl {
 				resolve(OvPassCnt.Cache);
 			}).fail(function (jqXHR, statusText, errorThrown) {
 				console.log(statusText);
+				OvPassCnt.UseServer = (OvPassCnt.UseServer + 1) % Conf.system.OverPassServer.length;
 				reject(jqXHR, statusText, errorThrown);
 			});
 		})
@@ -132,6 +135,7 @@ class OverPassControl {
 				OvPassCnt.LLc[x + "." + y] = true;
 			};
 		};
+		return OvPassCnt.Cache;
 	}
 
 }
