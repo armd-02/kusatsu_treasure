@@ -24,7 +24,8 @@
             "vending_machine": "自動販売機",
             "school": "学校",
             "townhall": "役所",
-            "theatre": "劇場"
+            "theatre": "劇場",
+            "toilets": "トイレ"
         },
         "assembly_point:tsunami": {
             "yes": "津波避難"

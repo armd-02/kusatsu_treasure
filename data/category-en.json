@@ -24,7 +24,8 @@
             "vending_machine": "vending machine",
             "school": "School",
             "townhall": "town hall",
-            "theatre": "Theatre"
+            "theatre": "theatre",
+            "toilets":"toilets"
         },
         "assembly_point:tsunami": {
             "yes": "tsunami evacuation"

@@ -290,6 +290,19 @@
                 "operator"
             ]
         },
+        "toilets":{
+            "overpass": [
+                "node[\"amenity\"=\"toilets\"]",
+                "way[\"amenity\"=\"toilets\"]"
+            ],
+            "tags": [
+                "amenity=toilets"
+            ],
+            "views": [
+                "name",
+                "operator"
+            ]
+        },
         "vending_machine": {
             "overpass": [
                 "node[\"amenity\"=\"vending_machine\"]",

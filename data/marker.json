@@ -24,7 +24,8 @@
             "vending_machine": "vending_machine.svg",
             "school": "school-JP.svg",
             "townhall": "town-hall.svg",
-            "theatre": "theatre.svg"
+            "theatre": "theatre.svg",
+            "toilets": "toilet.svg"
         },
         "assembly_point:tsunami": {
             "yes": "shelter.svg"
