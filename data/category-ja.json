@@ -8,7 +8,8 @@
             "bench": "ベンチ",
             "cafe": "カフェ/喫茶店",
             "community_centre": "公民館",
-            "drinking_water": "給水所/水栓",
+            "clock": "時計",
+            "drinking_water": "水飲み場",
             "fast_food": "ファーストフード",
             "ferry_terminal": "フェリーターミナル",
             "food_court": "フードコート",
@@ -21,11 +22,13 @@
             "post_office": "郵便局",
             "pub": "パブ/居酒屋",
             "restaurant": "レストラン",
-            "vending_machine": "自動販売機",
             "school": "学校",
+            "shelter": "東屋/避難所",
+            "telephone": "公衆電話",
             "townhall": "役所",
             "theatre": "劇場",
-            "toilets": "トイレ"
+            "toilets": "トイレ",
+            "vending_machine": "自動販売機"
         },
         "assembly_point:tsunami": {
             "yes": "津波避難"
@@ -51,12 +54,12 @@
             "convenience": "コンビニエンスストア",
             "deli": "お弁当/惣菜屋",
             "dairy": "乳製品店",
-            "dry_cleaning":"クリーニング店",
+            "dry_cleaning": "クリーニング店",
             "electronics": "家電販売屋",
             "farm": "農場直売店",
             "florist": "花屋",
             "frozen_food": "冷凍食品専門店",
-            "funeral_directors":"葬儀社",
+            "funeral_directors": "葬儀社",
             "greengrocer": "八百屋",
             "gift": "土産屋",
             "hairdresser": "美容院",
@@ -171,7 +174,8 @@
             "Cerasus × yedoensis": "桜"
         },
         "natural": {
-            "tree": "樹木"
+            "tree": "樹木",
+            "water": "池"
         },
         "emergency": {
             "fire_extinguisher": "消火器",
@@ -236,7 +240,8 @@
         },
         "man_made": {
             "torii": "鳥居",
-            "lamp": "灯籠"
+            "lamp": "灯籠",
+            "tower": "塔/鐘楼"
         },
         "landuse": {
             "farmland": "農地",
@@ -244,11 +249,12 @@
             "industrial": "工業"
         },
         "leisure": {
+            "amusement_arcade": "ゲームセンター",
             "garden": "庭",
             "pitch": "グラウンド",
             "park": "公園",
             "playground": "児童公園",
-            "amusement_arcade": "ゲームセンター"
+            "swimming_pool": "水泳プール"
         },
         "railway": {
             "station": "鉄道駅"

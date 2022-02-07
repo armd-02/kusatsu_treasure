@@ -147,6 +147,19 @@
                 "operator"
             ]
         },
+        "telephone": {
+            "overpass": [
+                "node[\"amenity\"=\"telephone\"]",
+                "way[\"amenity\"=\"telephone\"]"
+            ],
+            "tags": [
+                "amenity=telephone"
+            ],
+            "views": [
+                "name",
+                "operator"
+            ]
+        },
         "theatre": {
             "overpass": [
                 "node[\"amenity\"=\"theatre\"]",
@@ -179,13 +192,26 @@
         "park": {
             "overpass": [
                 "node[\"leisure\"=\"park\"]",
+                "way[\"leisure\"=\"park\"]",
                 "node[\"leisure\"=\"playground\"]",
                 "way[\"leisure\"=\"playground\"]",
-                "way[\"leisure\"=\"park\"]"
+                "node[\"amenity\"=\"shelter\"]",
+                "way[\"amenity\"=\"shelter\"]",
+                "node[\"amenity\"=\"clock\"]",
+                "node[\"amenity\"=\"bench\"]",
+                "way[\"amenity\"=\"bench\"]",
+                "node[\"man_made\"=\"tower\"]",
+                "way[\"man_made\"=\"tower\"]",
+                "node[\"man_made\"=\"drinking_water\"]"
             ],
             "tags": [
                 "leisure=park",
-                "leisure=playground"
+                "leisure=playground",
+                "amenity=shelter",
+                "amenity=clock",
+                "amenity=bench",
+                "tower:type=bell_tower",
+                "amenity=drinking_water"
             ],
             "views": [
                 "name",
@@ -248,6 +274,19 @@
                 "operator"
             ]
         },
+        "water":{
+            "overpass": [
+                "way[\"natural\"=\"water\"]",
+                "relation[\"natural\"=\"water\"]"
+            ],
+            "tags": [
+                "natural=water"
+            ],
+            "views": [
+                "name",
+                "religion"
+            ]
+        },
         "worship": {
             "overpass": [
                 "node[\"amenity\"=\"place_of_worship\"]",
@@ -284,6 +323,20 @@
             "tags": [
                 "public_transport=station",
                 "railway=station"
+            ],
+            "views": [
+                "name",
+                "operator"
+            ]
+        },
+        "swimming_pool":{
+            "overpass": [
+                "node[\"leisure\"=\"swimming_pool\"]",
+                "way[\"leisure\"=\"swimming_pool\"]",
+                "relation[\"leisure\"=\"swimming_pool\"]"
+            ],
+            "tags": [
+                "leisure=swimming_pool"
             ],
             "views": [
                 "name",

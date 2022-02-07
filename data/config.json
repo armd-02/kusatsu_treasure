@@ -5,8 +5,8 @@
             35.00372,
             135.94746
         ],
-        "maxbounds": "",
-        "_maxbounds": [
+        "_maxbounds": "",
+        "maxbounds": [
             [
                 35.09545,
                 135.86492
@@ -43,6 +43,8 @@
         "post_box",
         "toilets",
         "telephone",
+        "swimming_pool",
+        "water",
         "wikipedia"
     ],
     "listTable": {

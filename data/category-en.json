@@ -8,6 +8,7 @@
             "bench": "bench",
             "cafe": "cafe",
             "community_centre": "community center",
+            "clock": "clock",
             "drinking_water": "drinking water",
             "fast_food": "fast food",
             "ferry_terminal": "ferry terminal",
@@ -21,11 +22,13 @@
             "post_office": "POST Office",
             "pub": "pub",
             "restaurant": "restaurant",
-            "vending_machine": "vending machine",
-            "school": "School",
+            "school": "school",
+            "shelter": "shelter",
+            "telephone": "telephone",
             "townhall": "town hall",
             "theatre": "theatre",
-            "toilets":"toilets"
+            "toilets": "toilets",
+            "vending_machine": "vending machine"
         },
         "assembly_point:tsunami": {
             "yes": "tsunami evacuation"
@@ -171,7 +174,8 @@
             "Cerasus × yedoensis": "sakura"
         },
         "natural": {
-            "tree": "tree"
+            "tree": "tree",
+            "water": "water"
         },
         "emergency": {
             "fire_extinguisher": "extinguisher",
@@ -236,7 +240,8 @@
         },
         "man_made": {
             "torii": "torii",
-            "lamp": "lantern"
+            "lamp": "lantern",
+            "tower": "tower"
         },
         "landuse": {
             "farmland": "farmland",
@@ -244,11 +249,12 @@
             "industrial": "industrial"
         },
         "leisure": {
+            "amusement_arcade": "amusement arcade",
             "garden": "garden",
             "pitch": "pitch",
             "park": "park",
             "playground": "playground",
-            "amusement_arcade": "amusement arcade"
+            "swimming_pool": "swimming pool"
         },
         "railway": {
             "station": "station"

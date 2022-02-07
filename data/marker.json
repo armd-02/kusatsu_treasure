@@ -8,6 +8,7 @@
             "bench": "bench.svg",
             "cafe": "cafe.svg",
             "community_centre": "town-hall.svg",
+            "clock": "clock.svg",
             "drinking_water": "drinking-water.svg",
             "fast_food": "fast-food.svg",
             "ferry_terminal": "ferry.svg",
@@ -21,11 +22,13 @@
             "post_office": "post-JP.svg",
             "pub": "beer.svg",
             "restaurant": "restaurant.svg",
-            "vending_machine": "vending_machine.svg",
             "school": "school-JP.svg",
+            "shelter": "shelter.svg",
+            "telephone": "telephone.svg",
             "townhall": "town-hall.svg",
             "theatre": "theatre.svg",
-            "toilets": "toilet.svg"
+            "toilets": "toilet.svg",
+            "vending_machine": "vending_machine.svg"
         },
         "assembly_point:tsunami": {
             "yes": "shelter.svg"
@@ -82,7 +85,8 @@
             "Cerasus × yedoensis": "sakura.svg"
         },
         "natural": {
-            "tree": "park.svg"
+            "tree": "park.svg",
+            "water": "water.svg"
         },
         "emergency": {
             "fire_extinguisher": "fire-extinguisher.svg",
@@ -147,7 +151,8 @@
         },
         "man_made": {
             "torii": "shinto.svg",
-            "lamp": "lantern.svg"
+            "lamp": "lantern.svg",
+            "tower": "Emoji_Black_bell2.svg"
         },
         "landuse": {
             "farmland": "farm.svg",
@@ -155,11 +160,12 @@
             "industrial": "industry.svg"
         },
         "leisure": {
+            "amusement_arcade": "gaming.svg",
             "garden": "garden-centre.svg",
             "pitch": "pitch.svg",
             "park": "tree_and_bench.svg",
             "playground": "playground.svg",
-            "amusement_arcade": "gaming.svg"
+            "swimming_pool": "swimming.svg"
         },
         "railway": {
             "station": "train.svg"
