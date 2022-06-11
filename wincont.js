@@ -42,10 +42,12 @@ class winCont {
         winCont.modal_progress(0);
         $(`#${MW}`).modal({ backdrop: false, keyboard: true });
         winCont.modal_mode = true;
+        $(`#${MW}`).off('shown.bs.modal');
         $(`#${MW}`).on('shown.bs.modal', () => {
             ["yes", "no", "close"].forEach(keyn => delEvents(keyn));
             if (!winCont.modal_mode) $(`#${MW}`).modal('hide')
         });                 // Open中にCloseされた時の対応
+        $(`#${MW}`).off('hidden.bs.modal');
         $(`#${MW}`).on('hidden.bs.modal', () => {
             ["yes", "no", "close"].forEach(keyn => delEvents(keyn));
             p[`callback_${p.callback_close ? "close" : "no"}`]();
