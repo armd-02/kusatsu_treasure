@@ -1,4 +1,12 @@
 {
+	"site_title": {
+		"ja": "くさつお宝マップ",
+		"en": "Kusatsu Treasure Map"
+	},
+	"site_subtitle": {
+		"ja": "Community Map Maker",
+		"en": "Community Map Maker"
+	},
 	"about": {
 		"ja": "くさつお宝マップついて",
 		"en": "about Kusatsu Treasure Map"
@@ -6,18 +14,6 @@
 	"owner": {
 		"ja": "開発サイト",
 		"en": "development site"
-	},
-	"openstreetmap": {
-		"ja": "OpenStreetMapについて",
-		"en": "about OpenStreetMap"
-	},
-	"title": {
-		"ja": "くさつお宝マップ",
-		"en": "Kusatsu Treasure Map"
-	},
-	"subtitle": {
-		"ja": "Community Map Maker",
-		"en": "Community Map Maker"
 	},
 	"licence_title": {
 		"ja": "利用規約",
@@ -30,6 +26,38 @@
 	"more_message": {
 		"ja": "",
 		"en": ""
+	},
+	"eventdates": {
+		"ja": "開催期間: ",
+		"en": "Event Dates: "
+	},
+	"activities": {
+		"ja": "活動履歴",
+		"en": "Activities"
+	},
+	"libc": {
+		"ja": "年表",
+		"en": "chronology"
+	},
+	"children": {
+		"ja": "お宝",
+		"en": "Treasure"
+	},
+	"memories": {
+		"ja": "思い出など",
+		"en": "Memorials"
+	},
+	"actdate":{
+		"ja":"発生日",
+		"en":"Disaster Date"
+	},
+	"ds_subject":{
+		"ja":"作業名",
+		"en":"Subject"
+	},
+	"ds_detail_url":{
+		"ja":"詳細URL",
+		"en":"Detail URL"
 	},
 	"act_grade": {
 		"ja": "学年",

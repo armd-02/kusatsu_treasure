@@ -1,0 +1,121 @@
+{
+    "osm": {
+        "KusatsuTreasure_green": {
+            "overpass": [
+                "node[\"tourism\"]",
+                "way[\"tourism\"]",
+                "relation[\"tourism\"]",
+                "node[\"leisure\"=\"park\"]",
+                "way[\"leisure\"=\"park\"]",
+                "node[\"leisure\"=\"playground\"]",
+                "way[\"leisure\"=\"playground\"]",
+                "way[\"landuse\"=\"recreation_ground\"]"
+            ],
+            "tags": [
+                "leisure=park",
+                "leisure=playground",
+                "leisure=garden",
+                "landuse=farmland",
+                "landuse=allotments",
+                "tourism=museum",
+                "tourism=artwork",
+                "tourism=gallery"
+            ],
+            "expression": {
+                "stroke": "#409040",
+                "stroke-width": 2
+            },
+            "titles": [
+                "name",
+                "operator"
+            ]
+        },
+        "KusatsuTreasure_blue": {
+            "overpass": [
+                "node[\"leisure\"=\"swimming_pool\"]",
+                "way[\"leisure\"=\"swimming_pool\"]",
+                "relation[\"leisure\"=\"swimming_pool\"]",
+                "way[\"landuse\"=\"reservoir\"]",
+                "way[\"natural\"=\"water\"]",
+                "relation[\"natural\"=\"water\"]"
+            ],
+            "tags": [
+                "leisure=swimming_pool",
+                "natural=water",
+                "landuse"
+            ],
+            "expression": {
+                "stroke": "#404090",
+                "stroke-width": 2
+            },
+            "titles": [
+                "name",
+                "operator"
+            ]
+        },
+        "KusatsuTreasure_gray": {
+            "overpass": [
+                "node[\"amenity\"]",
+                "way[\"amenity\"]",
+                "relation[\"amenity\"]",
+                "way[\"emergency\"]",
+                "node[\"emergency\"]",
+                "node[\"shop\"]",
+                "way[\"shop\"]",
+                "way[\"social_facility\"=\"shelter\"]",
+                "node[\"social_facility\"=\"shelter\"]",
+                "node[\"tourism\"=\"information\"]",
+                "node[\"leisure\"=\"amusement_arcade\"]",
+                "way[\"leisure\"=\"amusement_arcade\"]",
+                "node[\"man_made\"=\"drinking_water\"]",
+                "node[\"man_made\"=\"tower\"]",
+                "way[\"man_made\"=\"tower\"]",
+                "node[\"historic\"]",
+                "way[\"historic\"]",
+                "node[\"highway\"=\"bus_stop\"]",
+                "node[\"public_transport\"=\"station\"]",
+                "way[\"public_transport\"=\"station\"]",
+                "node[\"railway\"=\"station\"]",
+                "way[\"railway\"=\"station\"]"
+            ],
+            "tags": [
+                "amenity=arts_centre",
+                "amenity=bench",
+                "amenity=cafe",
+                "amenity=community_centre",
+                "amenity=clock",
+                "amenity=drinking_water",
+                "amenity=restaurant",
+                "amenity=fast_food",
+                "amenity=shelter",
+                "amenity=post_box",
+                "amenity=townhall",
+                "amenity=library",
+                "amenity=toilets",
+                "amenity=theatre",
+                "amenity=theatre",
+                "amenity=place_of_worship",
+                "amenity=telephone",
+                "emergency",
+                "highway=bus_stop",
+                "historic",
+                "leisure=amusement_arcade",
+                "man_made",
+                "railway=station",
+                "public_transport=station",
+                "social_facility",
+                "shop",
+                "tourism=information",
+                "tower:type=bell_tower"
+            ],
+            "expression": {
+                "stroke": "#909090",
+                "stroke-width": 2
+            },
+            "titles": [
+                "name",
+                "operator"
+            ]
+        }
+    }
+}

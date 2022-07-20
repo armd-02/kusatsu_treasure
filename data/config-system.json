@@ -31,8 +31,18 @@
             "url": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
             "maxNativeZoom": 18
         },
-        "OSM_Darkmode": {
-            "name": "OpenStreetMap Darkmode",
+        "OSM_Thin": {
+            "name": "OpenStreetMap Thin",
+            "copyright": "<a href=\"https://openstreetmap.org\">&copy OpenStreetMap contributors</a>",
+            "url": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+            "filter": [
+                "brightness:95%",
+                "grayscale:60%"
+            ],
+            "maxNativeZoom": 18
+        },
+        "OSM_Dark": {
+            "name": "OpenStreetMap Dark",
             "copyright": "<a href=\"https://openstreetmap.org\">&copy OpenStreetMap contributors</a>",
             "url": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
             "filter": [
@@ -41,13 +51,13 @@
             ],
             "maxNativeZoom": 18
         },
-        "GIS_pale": {
+        "GSI_pale": {
             "name": "地理院地図 淡色",
             "copyright": "<a href='https://www.gsi.go.jp/kikakuchousei/kikakuchousei40182.html'>国土地理院 | &copy OpenStreetMap contributors</a>",
             "url": "https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png",
             "maxNativeZoom": 18
         },
-        "GIS_ort": {
+        "GSI_ort": {
             "name": "地理院地図 オルソ",
             "copyright": "<a href='https://www.gsi.go.jp/kikakuchousei/kikakuchousei40182.html'>国土地理院 | &copy OpenStreetMap contributors</a>",
             "url": "https://cyberjapandata.gsi.go.jp/xyz/ort/{z}/{x}/{y}.jpg",
