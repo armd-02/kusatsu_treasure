@@ -98,7 +98,7 @@
     "detail_menu": [
         {
             "glot-model": "act_add",
-            "linkto": "javascript:modal_activities.edit({form:'AattoMark'})",
+            "linkto": "javascript:modal_activities.edit({form:'child'})",
             "divider": false
         },
         {
@@ -119,7 +119,7 @@
         "buttons": [
             {
                 "btn_class": "btn btn-light border-secondary mr-2",
-                "code": "javascript:modal_activities.edit({form:'AattoMark'})",
+                "code": "javascript:modal_activities.edit({form:'child'})",
                 "icon_class": "fas fa-plus",
                 "btn_glot_name": "add_activity"
             },

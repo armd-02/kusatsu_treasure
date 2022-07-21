@@ -70,7 +70,7 @@ class modal_Activities {
 
                     Object.keys(form).forEach((key) => {
                         chtml += `<div class='row'>`;
-                        let gdata = act[form[key].gsheet] == undefined ? "" : act[form[key].gsheet];
+                        let gdata = act[form[key].gsheet] == undefined ? "" : String(act[form[key].gsheet]);
                         switch (form[key].type) {
                             case "date":
                                 chtml += `<div class='col'>${glot.get(form[key].glot)}</div><div class='col-9'>${basic.formatDate(new Date(gdata), "YYYY/MM/DD")}</div>`;
