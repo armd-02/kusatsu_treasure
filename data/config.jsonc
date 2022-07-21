@@ -21,16 +21,16 @@
         "phone_minZoom": 13,
         "maxZoom": 22,
         "zoomSnap": 0.5,
-        "iconViewZoom": 15,
         "bookmark": true
     },
     "PoiViewZoom": {
-        "activity": 14,
-        "KusatsuTreasure_green": 14,
-        "KusatsuTreasure_blue": 14,
-        "KusatsuTreasure_gray": 14
+        "activity": 13,
+        "KusatsuTreasure_green": 15,
+        "KusatsuTreasure_blue": 15,
+        "KusatsuTreasure_gray": 16
     },
     "targets": [
+        "activity",
         "KusatsuTreasure_green",
         "KusatsuTreasure_blue",
         "KusatsuTreasure_gray"
