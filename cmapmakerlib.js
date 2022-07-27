@@ -265,7 +265,7 @@ class poiMarker {
 						});
 					};
 				} else {
-					console.log("poiMarker: no osm data: " + act.osmid);
+					console.log("poiMarker: no load osm data: " + act.osmid);
 				};
 			});
 		};

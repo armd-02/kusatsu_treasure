@@ -4,12 +4,9 @@
             "overpass": [
                 "node[\"tourism\"]",
                 "way[\"tourism\"]",
-                "relation[\"tourism\"]",
-                "node[\"leisure\"=\"park\"]",
-                "way[\"leisure\"=\"park\"]",
-                "node[\"leisure\"=\"playground\"]",
-                "way[\"leisure\"=\"playground\"]",
-                "way[\"landuse\"=\"recreation_ground\"]"
+                "node[\"leisure\"]",
+                "way[\"leisure\"]",
+                "way[\"landuse\"]"
             ],
             "tags": [
                 "leisure=park",
@@ -22,8 +19,8 @@
                 "tourism=gallery"
             ],
             "expression": {
-                "stroke": "#409040",
-                "stroke-width": 2
+                "stroke": "#50B050",
+                "stroke-width": 4
             },
             "titles": [
                 "name",
@@ -32,20 +29,16 @@
         },
         "KusatsuTreasure_blue": {
             "overpass": [
-                "node[\"leisure\"=\"swimming_pool\"]",
-                "way[\"leisure\"=\"swimming_pool\"]",
-                "relation[\"leisure\"=\"swimming_pool\"]",
-                "way[\"landuse\"=\"reservoir\"]",
-                "way[\"natural\"=\"water\"]",
+                "way[\"natural\"]",
                 "relation[\"natural\"=\"water\"]"
             ],
             "tags": [
                 "leisure=swimming_pool",
                 "natural=water",
-                "landuse"
+                "landuse=reservoir"
             ],
             "expression": {
-                "stroke": "#404090",
+                "stroke": "#5050B0",
                 "stroke-width": 2
             },
             "titles": [
@@ -57,19 +50,13 @@
             "overpass": [
                 "node[\"amenity\"]",
                 "way[\"amenity\"]",
-                "relation[\"amenity\"]",
                 "way[\"emergency\"]",
                 "node[\"emergency\"]",
                 "node[\"shop\"]",
                 "way[\"shop\"]",
-                "way[\"social_facility\"=\"shelter\"]",
-                "node[\"social_facility\"=\"shelter\"]",
-                "node[\"tourism\"=\"information\"]",
-                "node[\"leisure\"=\"amusement_arcade\"]",
-                "way[\"leisure\"=\"amusement_arcade\"]",
-                "node[\"man_made\"=\"drinking_water\"]",
-                "node[\"man_made\"=\"tower\"]",
-                "way[\"man_made\"=\"tower\"]",
+                "way[\"social_facility\"]",
+                "node[\"social_facility\"]",
+                "way[\"man_made\"]",
                 "node[\"historic\"]",
                 "way[\"historic\"]",
                 "node[\"highway\"=\"bus_stop\"]",
@@ -100,7 +87,8 @@
                 "highway=bus_stop",
                 "historic",
                 "leisure=amusement_arcade",
-                "man_made",
+                "man_made=drinking_water",
+                "man_made=tower",
                 "railway=station",
                 "public_transport=station",
                 "social_facility",
@@ -109,7 +97,7 @@
                 "tower:type=bell_tower"
             ],
             "expression": {
-                "stroke": "#909090",
+                "stroke": "#B0B0B0",
                 "stroke-width": 2
             },
             "titles": [

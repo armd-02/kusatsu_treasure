@@ -8,7 +8,7 @@ const LANG = (window.navigator.userLanguage || window.navigator.language || wind
 const FILES = [
 	"./baselist.html", "./data/config.jsonc", './data/config-system.json', './data/config-activities.json',
 	`./data/marker.json`, `./data/category-${LANG}.json`, `data/listtable-${LANG}.json`,
-	`./data/glot-custom.json`, `data/glot-system.json`, './data/overpass-system.json', `./data/overpass-custom.json`];
+	`./data/glot-custom.json`, `data/glot-system.json`, './data/overpass-system.jsonc', `./data/overpass-custom.jsonc`];
 const glot = new Glottologist();
 var cmap_events = new cMapEvents();
 var modal_takeout = new modal_Takeout();
@@ -31,8 +31,8 @@ window.addEventListener("DOMContentLoaded", function () {
 		Conf.category_subkeys = Object.keys(Conf.category_sub);						// Make Conf.category_subkeys
 		glot.data = Object.assign(glot.data, arguments[7][0]);						// import glot data
 		glot.data = Object.assign(glot.data, arguments[8][0]);						// import glot data
-		Conf = Object.assign(Conf, arguments[9][0]);								// import OverPass
-		Conf.osm = Object.assign(Conf.osm, arguments[10][0].osm);					// import OverPass
+		Conf = Object.assign(Conf, JSON5.parse(arguments[9][0]));					// import OverPass
+		Conf.osm = Object.assign(Conf.osm, JSON5.parse(arguments[10][0]).osm);		// import OverPass
 		window.onresize = winCont.window_resize;    								// 画面サイズに合わせたコンテンツ表示切り替え
 		document.title = glot.get("site_title");									// Title
 		winCont.window_resize();			// Set Window Size(mapidのサイズ指定が目的)
