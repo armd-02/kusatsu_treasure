@@ -155,7 +155,13 @@ class CMapMaker {
 	url_share(actid) {			// URL共有機能
 		actid = actid == undefined ? "" : "." + actid;
 		let url = location.origin + location.pathname + location.search + actid + location.hash;
-		navigator.clipboard.writeText(url);
+		navigator.clipboard.writeText(url)
+			.then(() => {
+				console.log('url_share: success');
+			})
+			.catch(err => {
+				alert(glot.get("copy_miss"));
+			});
 	}
 
 	playback(flist) {					// 指定したリストを連続再生()

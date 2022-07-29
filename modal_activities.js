@@ -41,7 +41,7 @@ class modal_Activities {
             head.setAttribute("id", act.id.replace("/", ""));
             let chtml = `<div class="float-right">${glot.get("update")} ${updated}[<a href="javascript:modal_activities.edit({id:'${act.id}',form:'${newmode}'})">${glot.get("act_edit")}</a>]</div>`;
             chtml += glot.get("share_link") + `<button type="button" class="btn-sm btn-light ml-1 pl-2 pr-2 pt-0 pb-0"
-             data-toggle="popover" data-content="${glot.get("modal_popover_copied")}" onclick="cMapmaker.url_share('${act.id}')">
+             data-toggle="popover" data-content="${glot.get("copied")}" onclick="cMapmaker.url_share('${act.id}')">
                 <i class="fas fa-clone"></i>
             </button><br><br>`;
             switch (newmode) {
