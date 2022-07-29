@@ -153,15 +153,22 @@ class CMapMaker {
 	}
 
 	url_share(actid) {			// URL共有機能
+		function execCopy(string) {
+			let pre = document.createElement('pre');			// ClipBord Copy
+			pre.style.userSelect = 'auto';
+			let text = document.createElement("div");
+			text.appendChild(pre).textContent = string;
+			text.style.position = 'fixed';
+			text.style.right = '200%';
+			document.body.appendChild(text);
+			document.getSelection().selectAllChildren(text);
+			let copy = document.execCommand("copy");
+			document.body.removeChild(text);
+			return copy;
+		};
 		actid = actid == undefined ? "" : "." + actid;
 		let url = location.origin + location.pathname + location.search + actid + location.hash;
-		navigator.clipboard.writeText(url)
-			.then(() => {
-				console.log('url_share: success');
-			})
-			.catch(err => {
-				alert(glot.get("copy_miss"));
-			});
+		execCopy(url);
 	}
 
 	playback(flist) {					// 指定したリストを連続再生()
