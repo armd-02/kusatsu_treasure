@@ -4,8 +4,8 @@
 		"en": "Kusatsu Treasure Map"
 	},
 	"site_subtitle": {
-		"ja": "Community Map Maker",
-		"en": "Community Map Maker"
+		"ja": "Powered by Community Map Maker",
+		"en": "Powered by Community Map Maker"
 	},
 	"about": {
 		"ja": "くさつお宝マップついて",
@@ -47,17 +47,17 @@
 		"ja": "思い出など",
 		"en": "Memorials"
 	},
-	"actdate":{
-		"ja":"発生日",
-		"en":"Disaster Date"
+	"actdate": {
+		"ja": "発生日",
+		"en": "Disaster Date"
 	},
-	"ds_subject":{
-		"ja":"作業名",
-		"en":"Subject"
+	"ds_subject": {
+		"ja": "作業名",
+		"en": "Subject"
 	},
-	"ds_detail_url":{
-		"ja":"詳細URL",
-		"en":"Detail URL"
+	"ds_detail_url": {
+		"ja": "詳細URL",
+		"en": "Detail URL"
 	},
 	"act_grade": {
 		"ja": "学年",

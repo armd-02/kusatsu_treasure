@@ -25,9 +25,9 @@
     },
     "PoiViewZoom": {
         "activity": 13,
-        "KusatsuTreasure_green": 15,
-        "KusatsuTreasure_blue": 15,
-        "KusatsuTreasure_gray": 16
+        "KusatsuTreasure_green": 16,
+        "KusatsuTreasure_blue": 16,
+        "KusatsuTreasure_gray": 17
     },
     "targets": [
         "activity",
