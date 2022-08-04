@@ -69,6 +69,9 @@
         "bridge":{
             "yes":"橋"
         },
+        "craft": {
+            "caterer": "仕出し料理店"
+        },
         "diplomatic": {
             "embassy": "大使館"
         },
@@ -314,9 +317,11 @@
         "leisure": {
             "amusement_arcade": "ゲームセンター",
             "garden": "庭",
+            "marina":"マリーナ",
             "pitch": "グラウンド",
             "park": "公園",
             "playground": "児童公園",
+            "sports_centre": "運動施設",
             "swimming_pool": "水泳プール"
         },
         "railway": {

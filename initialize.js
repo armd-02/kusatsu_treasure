@@ -58,7 +58,7 @@ window.addEventListener("DOMContentLoaded", function () {
 			poiCont.set_actjson(results[0]);
 			let osmids = poiCont.pois().acts.map(act => { return act.osmid });
 			osmids = osmids.filter(Boolean);
-			if (osmids.length > 0) OvPassCnt.get_osmids(osmids).then(geojson => poiCont.add_geojson(geojson));
+			if (osmids.length > 0 && !Conf.static.mode) OvPassCnt.get_osmids(osmids).then(geojson => poiCont.add_geojson(geojson));
 
 			winCont.window_resize();
 			listTable.init();
@@ -93,14 +93,14 @@ window.addEventListener("DOMContentLoaded", function () {
 			});
 		});
 
-		/* 		if (Conf.google.Analytics !== "") {			// Google Analytics
-					let AnalyticsURL = GTAG + Conf.default.GoogleAnalytics + '"></script>';
-					document.getElementsByTagName('head').insertAdjacentHTML("beforeend", AnalyticsURL);
-					window.dataLayer = window.dataLayer || [];
-					function gtag() { dataLayer.push(arguments); };
-					gtag('js', new Date());
-					gtag('config', Conf.google.Analytics);
-				}; */
+		/* if (Conf.google.Analytics !== "") {			// Google Analytics
+			let AnalyticsURL = GTAG + Conf.default.GoogleAnalytics + '"></script>';
+			document.getElementsByTagName('head').insertAdjacentHTML("beforeend", AnalyticsURL);
+			window.dataLayer = window.dataLayer || [];
+			function gtag() { dataLayer.push(arguments); };
+			gtag('js', new Date());
+			gtag('config', Conf.google.Analytics);
+		};*/
 		console.log("initial: End.");
 	});
 });

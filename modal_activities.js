@@ -39,7 +39,8 @@ class modal_Activities {
             let form = Conf.activities[newmode].form;
             head.innerHTML = act.title;
             head.setAttribute("id", act.id.replace("/", ""));
-            let chtml = `<div class="float-right">${glot.get("update")} ${updated}[<a href="javascript:modal_activities.edit({id:'${act.id}',form:'${newmode}'})">${glot.get("act_edit")}</a>]</div>`;
+            let glotkey = newmode == "memorial" ? "memories_receptiondate" : "update";  // 思い出残しは受付日
+            let chtml = `<div class="float-right">${glot.get(glotkey)} ${updated}[<a href="javascript:modal_activities.edit({id:'${act.id}',form:'${newmode}'})">${glot.get("act_edit")}</a>]</div>`;
             chtml += glot.get("share_link") + `<button type="button" class="btn-sm btn-light ml-1 pl-2 pr-2 pt-0 pb-0"
              data-toggle="popover" data-content="${glot.get("copied")}" onclick="cMapmaker.url_share('${act.id}')">
                 <i class="fas fa-clone"></i>
@@ -56,15 +57,6 @@ class modal_Activities {
                     chtml += "<strong>" + glot.get("libc_area") + "</strong><br>" + act.area + "<br><br>";
                     chtml += "<strong>" + glot.get("libc_ymd") + `</strong><br>${act_ymd}<br><br>`;
                     break;
-                case "memorial":
-                    chtml += "<strong>" + glot.get("title") + "</strong><br>" + act.title + "<br><br>";
-                    chtml += "<strong>" + glot.get("memories_author") + "</strong><br>" + act.author + "<br><br>";
-                    chtml += "<strong>" + glot.get("memories_memorial") + "</strong><br>" + act.body.replace(/\r?\n/g, '<br>') + "<br><br>";
-                    chtml += "<strong>" + glot.get("memories_place") + "</strong><br>" + act.place + "<br><br>";
-                    chtml += "<strong>" + glot.get("memories_supply") + "</strong><br>" + act.supply + "<br><br>";
-                    chtml += "<strong>" + glot.get("memories_references") + "</strong><br>" + act.references + "<br><br>";
-                    chtml += "<strong>" + glot.get("memories_reception") + "</strong><br>" + basic.formatDate(new Date(act.reception), ymd) + "<br><br>";
-                    break;
                 default:    // event
                     head.innerHTML = act.title;
 
@@ -79,14 +71,15 @@ class modal_Activities {
                             case "text":
                             case "textarea":
                             case "quiz_choice":
-                                if (key !== "quiz_answer" && key !== "title") chtml += `<div class='col'>${glot.get(form[key].glot)}</div><div class='col-9'>${gdata.replace(/\r?\n/g, '<br>')}</div>`;
+                                let text = modal_activities.text2link(gdata.replace(/\r?\n/g, '<br>'));
+                                if (key !== "quiz_answer" && key !== "title") chtml += `<div class='mb-2 col'>${glot.get(form[key].glot)}</div><div class='mb-2 col-9'>${text}</div>`;
                                 break;
                             case "quiz_textarea":
-                                chtml += `<div class='col'>${glot.get(form[key].glot)}</div><div class='col-9'>${gdata.replace(/\r?\n/g, '<br>')}</div>`;
+                                chtml += `<div class='mb-2 col'>${glot.get(form[key].glot)}</div><div class='mb-2 col-9'>${gdata.replace(/\r?\n/g, '<br>')}</div>`;
                                 break;
                             case "url":
                                 if (gdata !== "http://" && gdata !== "https://" && gdata !== "") {
-                                    chtml += `<div class='col'>${glot.get(form[key].glot)}</div><div class='col-9'><a href="${gdata}">${gdata}</a></div>`;
+                                    chtml += `<div class='mb-2 col'>${glot.get(form[key].glot)}</div><div class='mb-2 col-9'><a href="${gdata}">${gdata}</a></div>`;
                                 };
                                 break;
                             case "image_url":
@@ -116,6 +109,15 @@ class modal_Activities {
             html += `<li><span class="pointer" onclick="document.getElementById('${act.id.replace('/', '')}').scrollIntoView({behavior: 'smooth'})">${act.title}<span></li>`;
         }
         return html + "</ul>";
+    };
+
+    // テキストからhttp(s)を探してリンクへ変換する
+    text2link(str) {
+        let regexp_url = /((h?)(ttps?:\/\/[a-zA-Z0-9.\-_@:/~?%&;=+#',()*!]+))/g; // ']))/;
+        let regexp_makeLink = function (all, url, h, href) {
+            return '<a href="h' + href + '">' + url + '</a>';
+        }
+        return str.replace(regexp_url, regexp_makeLink);
     }
 
     // edit activity

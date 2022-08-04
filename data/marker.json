@@ -30,7 +30,7 @@
                 "hospital": "hospital.svg",
                 "ice_cream": "ice-cream.svg",
                 "internet_cafe": "internet_cafe.svg",
-                "kindergarten": "marker-stroked.svg",
+                "kindergarten": "school.svg",
                 "library": "library.svg",
                 "nightclub": "music.svg",
                 "marketplace": "shopping-basket.svg",
@@ -70,6 +70,9 @@
             },
             "bridge": {
                 "yes": "bridge.svg"
+            },
+            "craft": {
+                "caterer": "catering.svg"
             },
             "diplomatic": {
                 "embassy": "diplomatic.svg"
@@ -245,9 +248,11 @@
             "leisure": {
                 "amusement_arcade": "gaming.svg",
                 "garden": "garden-centre.svg",
+                "marina":"sailboat.svg",
                 "pitch": "pitch.svg",
                 "park": "tree_and_bench.svg",
                 "playground": "playground.svg",
+                "sports_centre": "pitch.svg",
                 "swimming_pool": "swimming.svg"
             },
             "office": {

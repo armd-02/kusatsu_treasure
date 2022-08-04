@@ -9,7 +9,7 @@
             "bbq": "bbq",
             "bench": "bench",
             "bicycle_parking": "bicycle parking",
-            "bus_station":"bus station",
+            "bus_station": "bus station",
             "cafe": "cafe",
             "clinic": "clinic",
             "clock": "clock",
@@ -66,14 +66,17 @@
         "attraction": {
             "animal": "animal"
         },
-        "bridge":{
-            "yes":"bridge"
+        "bridge": {
+            "yes": "bridge"
+        },
+        "craft": {
+            "caterer": "caterer"
         },
         "diplomatic": {
             "embassy": "embassy"
         },
         "shop": {
-            "art":"art", 
+            "art": "art",
             "agrarian": "agrarian",
             "alcohol": "alcohol",
             "bakery": "bakery",
@@ -99,7 +102,7 @@
             "funeral_directors": "cemetery",
             "greengrocer": "greengrocer",
             "gift": "gift",
-            "laundry":"laundry",
+            "laundry": "laundry",
             "hairdresser": "hairdresser",
             "health_food": "health food",
             "ice_cream": "ice cream",
@@ -112,9 +115,9 @@
             "spices": "spices",
             "tobacco": "pipe",
             "tea": "tea",
-            "ticket":"ticket",
-            "travel_agency":"travel agency",
-            "rice":"rice",
+            "ticket": "ticket",
+            "travel_agency": "travel agency",
+            "rice": "rice",
             "water": "water",
             "wine": "wine",
             "supermarket": "supermarket",
@@ -227,7 +230,7 @@
             "water_tank": "Water Tank"
         },
         "highway": {
-            "bus_stop":"bus stop",
+            "bus_stop": "bus stop",
             "traffic_signals": "traffic signals",
             "street_lamp": "street lamp",
             "elevator": "elevator"
@@ -293,7 +296,7 @@
             "guidepost": "guidepost"
         },
         "man_made": {
-            "bridge":"bridge",
+            "bridge": "bridge",
             "torii": "torii",
             "lamp": "lantern",
             "tower": "tower",
@@ -314,9 +317,11 @@
         "leisure": {
             "amusement_arcade": "amusement arcade",
             "garden": "garden",
+            "marina": "marina",
             "pitch": "pitch",
             "park": "park",
             "playground": "playground",
+            "sports_centre": "sports centre",
             "swimming_pool": "swimming pool"
         },
         "railway": {
